@@ -8,12 +8,10 @@ use Acme\DemoBundle\Model\Note;
 use FOS\Rest\Util\Codes;
 
 use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\View\RouteRedirectView;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
@@ -25,7 +23,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @package Acme\DemoBundle\Controller
  * @author Gordon Franke <info@nevalon.de>
  */
-class NoteController extends Controller
+class NoteController extends FOSRestController
 {
     const SESSION_CONTEXT_NOTE = 'notes';
 
@@ -154,7 +152,7 @@ class NoteController extends Controller
             $notes[] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
-            return RouteRedirectView::create('get_notes');
+            return $this->routeRedirectView('get_notes');
         }
 
         return array(
@@ -241,7 +239,7 @@ class NoteController extends Controller
             $notes[$id] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
-            return RouteRedirectView::create('get_notes', array(), Codes::HTTP_OK);
+            return $this->routeRedirectView('get_notes', array(), Codes::HTTP_OK);
         }
 
         return array(
@@ -282,7 +280,7 @@ class NoteController extends Controller
         unset($notes[$id]);
         $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
-        return RouteRedirectView::create('get_notes', array(), Codes::HTTP_NO_CONTENT);
+        return $this->routeRedirectView('get_notes', array(), Codes::HTTP_NO_CONTENT);
     }
 
     /**
