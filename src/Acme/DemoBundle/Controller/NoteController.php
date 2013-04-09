@@ -15,6 +15,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -50,7 +51,7 @@ class NoteController extends Controller
      */
     public function getNotesAction(ParamFetcherInterface $paramFetcher)
     {
-        $session = $this->get('request')->getSession();
+        $session = $this->getRequest()->getSession();
 
         $start = 0;
         if (null !== $lastId = $paramFetcher->get('lastId')) {
@@ -87,10 +88,10 @@ class NoteController extends Controller
      */
     public function getNoteAction($id)
     {
-        $session = $this->get('request')->getSession();
+        $session = $this->getRequest()->getSession();
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            throw new ResourceNotFoundException("Note does not exist.");
+            $this->createNotFoundException("Note does not exist.");
         }
 
         return $notes[$id];
@@ -113,7 +114,7 @@ class NoteController extends Controller
      */
     public function newNotesAction()
     {
-        $form = $this->get('form.factory')->create(new NoteType());
+        $form = $this->createForm(new NoteType());
 
         return $form;
     }
@@ -138,16 +139,13 @@ class NoteController extends Controller
      *
      * @return FormTypeInterface|RouteRedirectView
      */
-    public function postNotesAction()
+    public function postNotesAction(Request $request)
     {
         $note = new Note();
-        $form = $this->get('form.factory')->create(new NoteType(), $note);
+        $form = $this->createForm(new NoteType(), $note);
 
-        $request = $this->container->get('request');
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $session = $this->get('request')->getSession();
+        if ($form->bind($request)->isValid()) {
+            $session = $this->getRequest()->getSession();
 
             $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
             $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
@@ -186,14 +184,14 @@ class NoteController extends Controller
      */
     public function editNotesAction($id)
     {
-        $session = $this->get('request')->getSession();
+        $session = $this->getRequest()->getSession();
 
         $notes = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            throw new ResourceNotFoundException("Note does not exist.");
+            $this->createNotFoundException("Note does not exist.");
         }
 
-        $form = $this->get('form.factory')->create(new NoteType(), $notes[$id]);
+        $form = $this->createForm(new NoteType(), $notes[$id]);
 
         return $form;
     }
@@ -223,22 +221,19 @@ class NoteController extends Controller
      *
      * @throws ResourceNotFoundException when note not exist
      */
-    public function putNotesAction($id)
+    public function putNotesAction(Request $request, $id)
     {
-        $session = $this->get('request')->getSession();
+        $session = $this->getRequest()->getSession();
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            throw new ResourceNotFoundException("Note does not exist.");
+            $this->createNotFoundException("Note does not exist.");
         }
         $note = $notes[$id];
 
-        $form = $this->get('form.factory')->create(new NoteType(), $note);
+        $form = $this->createForm(new NoteType(), $note);
 
-        $request = $this->container->get('request');
-        $form->bind($request);
-
-        if ($form->isValid()) {
+        if ($form->bind($request)->isValid()) {
             $notes[$id] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
@@ -273,11 +268,11 @@ class NoteController extends Controller
      */
     public function deleteNotesAction($id)
     {
-        $session = $this->get('request')->getSession();
+        $session = $this->getRequest()->getSession();
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            throw new ResourceNotFoundException("Note does not exist.");
+            $this->createNotFoundException("Note does not exist.");
         }
         unset($notes[$id]);
         $session->set(self::SESSION_CONTEXT_NOTE, $notes);
