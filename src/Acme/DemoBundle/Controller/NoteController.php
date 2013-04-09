@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Rest controller for notes
@@ -45,13 +45,14 @@ class NoteController extends Controller
      *
      * @Annotations\View()
      *
-     * @param ParamFetcherInterface $paramFetcher
+     * @param Request               $request      the request object
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
      * @return array
      */
-    public function getNotesAction(ParamFetcherInterface $paramFetcher)
+    public function getNotesAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
-        $session = $this->getRequest()->getSession();
+        $session = $request->getSession();
 
         $start = 0;
         if (null !== $lastId = $paramFetcher->get('lastId')) {
@@ -80,18 +81,19 @@ class NoteController extends Controller
      *
      * @Annotations\View(templateVar="note")
      *
-     * @param int $id note id
+     * @param Request $request the request object
+     * @param int     $id      the note id
      *
      * @return array
      *
-     * @throws ResourceNotFoundException when note not exist
+     * @throws NotFoundHttpException when note not exist
      */
-    public function getNoteAction($id)
+    public function getNoteAction(Request $request, $id)
     {
-        $session = $this->getRequest()->getSession();
+        $session = $request->getSession();
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            $this->createNotFoundException("Note does not exist.");
+            throw $this->createNotFoundException("Note does not exist.");
         }
 
         return $notes[$id];
@@ -114,9 +116,7 @@ class NoteController extends Controller
      */
     public function newNotesAction()
     {
-        $form = $this->createForm(new NoteType());
-
-        return $form;
+        return $this->createForm(new NoteType());
     }
 
     /**
@@ -136,6 +136,8 @@ class NoteController extends Controller
      *   template = "AcmeDemoBundle:Note:newNote.html.twig",
      *   statusCode = Codes::HTTP_BAD_REQUEST
      * )
+     *
+     * @param Request $request the request object
      *
      * @return FormTypeInterface|RouteRedirectView
      */
@@ -176,19 +178,20 @@ class NoteController extends Controller
      *
      * @Annotations\View()
      *
-     * @param int $id the note id
+     * @param Request $request the request object
+     * @param int     $id      the note id
      *
      * @return FormTypeInterface
      *
-     * @throws ResourceNotFoundException when note not exist
+     * @throws NotFoundHttpException when note not exist
      */
-    public function editNotesAction($id)
+    public function editNotesAction(Request $request, $id)
     {
-        $session = $this->getRequest()->getSession();
+        $session = $request->getSession();
 
         $notes = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            $this->createNotFoundException("Note does not exist.");
+            throw $this->createNotFoundException("Note does not exist.");
         }
 
         $form = $this->createForm(new NoteType(), $notes[$id]);
@@ -215,11 +218,12 @@ class NoteController extends Controller
      *   statusCode=Codes::HTTP_BAD_REQUEST
      * )
      *
-     * @param int $id the note id
+     * @param Request $request the request object
+     * @param int     $id      the note id
      *
      * @return FormTypeInterface|RouteRedirectView
      *
-     * @throws ResourceNotFoundException when note not exist
+     * @throws NotFoundHttpException when note not exist
      */
     public function putNotesAction(Request $request, $id)
     {
@@ -227,7 +231,7 @@ class NoteController extends Controller
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            $this->createNotFoundException("Note does not exist.");
+            throw $this->createNotFoundException("Note does not exist.");
         }
         $note = $notes[$id];
 
@@ -260,19 +264,20 @@ class NoteController extends Controller
      *   }
      * )
      *
-     * @param int $id the note id
+     * @param Request $request the request object
+     * @param int     $id      the note id
      *
      * @return RouteRedirectView
      *
-     * @throws ResourceNotFoundException when note not exist
+     * @throws NotFoundHttpException when note not exist
      */
-    public function deleteNotesAction($id)
+    public function deleteNotesAction(Request $request, $id)
     {
         $session = $this->getRequest()->getSession();
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            $this->createNotFoundException("Note does not exist.");
+            throw $this->createNotFoundException("Note does not exist.");
         }
         unset($notes[$id]);
         $session->set(self::SESSION_CONTEXT_NOTE, $notes);
@@ -294,12 +299,13 @@ class NoteController extends Controller
      *   }
      * )
      *
-     * @param int $id the note id
+     * @param Request $request the request object
+     * @param int     $id      the note id
      *
      * @return RouteRedirectView
      */
-    public function removeNotesAction($id)
+    public function removeNotesAction(Request $request, $id)
     {
-        return $this->deleteNotesAction($id);
+        return $this->deleteNotesAction($request, $id);
     }
 }

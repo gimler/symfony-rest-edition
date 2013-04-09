@@ -85,6 +85,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(201, $response->getStatusCode(), $response->getContent());
+        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
     public function testEditNote()
@@ -135,7 +136,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
-        $this->assertTrue($this->client->getResponse()->isRedirect('http://localhost/notes'));
+        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
     public function testRemoveNote()
@@ -153,7 +154,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('', $response->getContent());
+        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
         // see https://github.com/symfony/symfony/pull/7610
         //$this->assertTrue($this->client->getResponse()->isRedirect('http://localhost/notes'));
     }
@@ -173,7 +174,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('', $response->getContent());
+        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
         // see https://github.com/symfony/symfony/pull/7610
         //$this->assertTrue($this->client->getResponse()->isRedirect('http://localhost/notes'));
     }
