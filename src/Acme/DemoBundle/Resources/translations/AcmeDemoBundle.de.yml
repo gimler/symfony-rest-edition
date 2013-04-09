@@ -1,0 +1,15 @@
+note:
+  list:
+    link: zurück zur Notizliste
+    headline: Verfügbare Notizen
+    empty: Keine Notizen gefunden
+  new:
+    link: Neue Notiz anlegen
+    headline: Neue Notiz anlegen
+    submit: Notiz hinzufügen
+  edit:
+    link: Notiz bearbeiten
+    headline: Notiz \#%id% bearbeiten
+    submit: Notiz aktualisieren
+  remove:
+    link: remove

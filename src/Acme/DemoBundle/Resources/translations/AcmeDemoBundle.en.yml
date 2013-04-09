@@ -1,0 +1,15 @@
+note:
+  list:
+    link: back to note list
+    headline: Available notes
+    empty: No notes found
+  new:
+    link: create new note
+    headline: Create new note
+    submit: add note
+  edit:
+    link: edit
+    headline: Edit note %id%
+    submit: update note
+  remove:
+    link: remove

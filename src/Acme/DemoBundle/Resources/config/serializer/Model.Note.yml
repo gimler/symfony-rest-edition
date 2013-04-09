@@ -1,0 +1,7 @@
+Acme\DemoBundle\Model\Note:
+  exclusion_policy: ALL
+  xml_root_name: note
+  properties:
+    message:
+      expose: true
+      type: string

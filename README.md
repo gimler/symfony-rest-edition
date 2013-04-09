@@ -1,17 +1,17 @@
-Symfony Standard Edition
+Symfony REST Edition
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
+Welcome to the Symfony REST Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.
 
 This document contains information on how to download, install, and start
 using Symfony. For a more detailed explanation, see the [Installation][1]
 chapter of the Symfony Documentation.
 
-1) Installing the Standard Edition
+1) Installing the REST Edition
 ----------------------------------
 
-When it comes to installing the Symfony Standard Edition, you have the
+When it comes to installing the Symfony REST Edition, you have the
 following options.
 
 ### Use Composer (*recommended*)
@@ -26,7 +26,7 @@ http://getcomposer.org/ or just run the following command:
 
 Then, use the `create-project` command to generate a new Symfony application:
 
-    php composer.phar create-project symfony/framework-standard-edition path/to/install
+    php composer.phar create-project gimler/symfony-rest-edition path/to/install
 
 Composer will install Symfony and all its dependencies under the
 `path/to/install` directory.
@@ -105,9 +105,11 @@ playing with it, you can remove it by following these steps:
 What's inside?
 ---------------
 
-The Symfony Standard Edition is configured with the following defaults:
+The Symfony REST Edition is configured with the following defaults:
 
   * Twig is the only configured template engine;
+
+  * Translations are activated
 
   * Doctrine ORM/DBAL is configured;
 
@@ -155,11 +157,15 @@ It comes pre-configured with the following bundles:
   * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
     code
 
+  * [**FOSRestBundle**][16] - Adds rest functionality
+
+  * [**NelmioApiDocBundle**][17] - Add API documentation features
+
 Enjoy!
 
 [1]:  http://symfony.com/doc/2.1/book/installation.html
 [2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
+[3]:  https://github.com/gimler/symfony-rest-edition/archive/master.zip
 [4]:  http://symfony.com/doc/2.1/quick_tour/the_big_picture.html
 [5]:  http://symfony.com/doc/2.1/index.html
 [6]:  http://symfony.com/doc/2.1/bundles/SensioFrameworkExtraBundle/index.html
@@ -172,3 +178,5 @@ Enjoy!
 [13]: http://jmsyst.com/bundles/JMSSecurityExtraBundle/master
 [14]: http://jmsyst.com/bundles/JMSDiExtraBundle/master
 [15]: http://symfony.com/doc/2.1/bundles/SensioGeneratorBundle/index.html
+[16]: https://github.com/FriendsOfSymfony/FOSRestBundle
+[17]: https://github.com/nelmio/NelmioApiDocBundle

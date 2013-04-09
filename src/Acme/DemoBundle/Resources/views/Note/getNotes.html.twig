@@ -1,0 +1,26 @@
+{% extends "AcmeDemoBundle::layout.html.twig" %}
+
+{% block title "Symfony - Notes" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'note.list.headline'|trans({}, 'AcmeDemoBundle') }}</h1>
+
+    <ul id="note-list">
+        {% for id, note in notes %}
+        <li>
+            <a href="{{ path('get_note', {'id': id}) }}">{{ note }}</a>
+            [<a href="{{ path('edit_notes', {'id': id}) }}">{{ 'note.edit.link'|trans({}, 'AcmeDemoBundle') }}</a>]
+            [<a href="{{ path('remove_notes', {'id': id}) }}">{{ 'note.remove.link'|trans({}, 'AcmeDemoBundle') }}</a>]
+        </li>
+        {% else %}
+        <li>{{ 'note.list.empty'|trans({}, 'AcmeDemoBundle') }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{{ path('new_notes') }}">{{ 'note.new.link'|trans({}, 'AcmeDemoBundle') }}</a>
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}

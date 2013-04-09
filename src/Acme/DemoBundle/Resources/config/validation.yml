@@ -1,0 +1,4 @@
+Acme\DemoBundle\Model\Note:
+    properties:
+        message:
+            - NotBlank: ~
