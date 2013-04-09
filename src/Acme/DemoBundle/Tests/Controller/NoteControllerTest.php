@@ -51,6 +51,12 @@ class NoteControllerTest extends WebTestCase
 
     public function testGetNote()
     {
+        $this->client->request('GET', '/notes/0.json');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+
         $this->createNote('my note for get');
 
         $this->client->request('GET', '/notes/0.json');
@@ -83,6 +89,12 @@ class NoteControllerTest extends WebTestCase
 
     public function testEditNote()
     {
+        $this->client->request('GET', '/notes/0/edit.json');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+
         $this->createNote('my note for post');
 
         $this->client->request('GET', '/notes/0/edit.json');
@@ -95,12 +107,23 @@ class NoteControllerTest extends WebTestCase
 
     public function testPutNote()
     {
-        $this->createNote('my note for post');
-
         $csrfToken = $this->client
             ->getContainer()
             ->get('form.csrf_provider')
             ->generateCsrfToken('note');
+
+        $this->client->request('PUT', '/notes/0.json', array(
+            'note' => array(
+                '_token'  => $csrfToken,
+                'message' => 'my note for put'
+            )
+        ));
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+
+        $this->createNote('my note for post');
 
         $this->client->request('PUT', '/notes/0.json', array(
             'note' => array(
@@ -117,6 +140,12 @@ class NoteControllerTest extends WebTestCase
 
     public function testRemoveNote()
     {
+        $this->client->request('GET', '/notes/0/remove.json');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+
         $this->createNote('my note for get');
 
         $this->client->request('GET', '/notes/0/remove.json');
@@ -131,6 +160,12 @@ class NoteControllerTest extends WebTestCase
 
     public function testDeleteNote()
     {
+        $this->client->request('DELETE', '/notes/0.json');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+
         $this->createNote('my note for get');
 
         $this->client->request('DELETE', '/notes/0.json');
