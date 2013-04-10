@@ -9,7 +9,12 @@
     <ul id="demo-list">
         <li><a href="{{ path('_demo_hello', {'name': 'World'}) }}">Hello World</a></li>
         <li><a href="{{ path('_demo_secured_hello', {'name': 'World'}) }}">Access the secured area</a> <a href="{{ path('_demo_login') }}">Go to the login page</a></li>
-        <li><a href="{{ path('get_notes') }}">REST Controller</a></li>
+        {# <li><a href="{{ path('_demo_contact') }}">Send a Message</a></li> #}
+    </ul>
+    <h2 class="title">REST</h2>
+    <ul>
+        <li><a href="{{ path('get_notes') }}">Demo Controller</a></li>
+        <li><a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a></li>
         {# <li><a href="{{ path('_demo_contact') }}">Send a Message</a></li> #}
     </ul>
 {% endblock %}
