@@ -54,7 +54,7 @@ class NoteController extends FOSRestController
 
         $start = 0;
         if (null !== $lastId = $paramFetcher->get('lastId')) {
-            $start = $lastId;
+            $start = $lastId + 1;
         }
         $limit = $paramFetcher->get('limit');
 
