@@ -20,7 +20,8 @@
         "jms/di-extra-bundle": "1.3.*",
         "jms/serializer-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "dev-master",
-        "nelmio/api-doc-bundle": "dev-master"
+        "nelmio/api-doc-bundle": "dev-master",
+        "fsc/hateoas-bundle": "0.4.x-dev"
     },
     "scripts": {
         "post-install-cmd": [

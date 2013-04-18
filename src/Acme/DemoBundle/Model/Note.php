@@ -5,6 +5,11 @@ namespace Acme\DemoBundle\Model;
 class Note
 {
     /**
+     * @var int
+     */
+    public $id;
+
+    /**
      * @var string
      */
     public $secret;

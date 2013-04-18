@@ -1,0 +1,11 @@
+Acme\DemoBundle\Model\Note:
+  relations:
+    self:
+      rel: self
+      href:
+        route: get_note
+        parameters: {"id": ".id"}
+    tasks:
+      rel: notes
+      href:
+        route: get_notes

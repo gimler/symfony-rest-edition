@@ -46,7 +46,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"notes":[{"message":"my note for list"}]}', $response->getContent());
+        $this->assertEquals('{"notes":[{"message":"my note for list","links":{"self":{"href":"http:\/\/localhost\/notes\/0"},"notes":{"href":"http:\/\/localhost\/notes"}}}]}', $response->getContent());
     }
 
     public function testGetNote()
@@ -64,7 +64,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"message":"my note for get"}', $response->getContent());
+        $this->assertEquals('{"message":"my note for get","links":{"self":{"href":"http:\/\/localhost\/notes\/0"},"notes":{"href":"http:\/\/localhost\/notes"}}}', $response->getContent());
     }
 
     public function testNewNote()

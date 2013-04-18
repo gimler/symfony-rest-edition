@@ -1,5 +1,9 @@
 {
-    "hash": "2ae71dcbbe3ec3d223b72ea9272480a2",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "20ae294701f55ef84ec5b455b7140b54",
     "packages": [
         {
             "name": "dflydev/markdown",
@@ -699,12 +703,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "4a5a7e6c4d618ad12d7d52c31b5740669bfa4ca3"
+                "reference": "74e5cb79b5e7efa7e1e99f45260aaced13064053"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/4a5a7e6c4d618ad12d7d52c31b5740669bfa4ca3",
-                "reference": "4a5a7e6c4d618ad12d7d52c31b5740669bfa4ca3",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/74e5cb79b5e7efa7e1e99f45260aaced13064053",
+                "reference": "74e5cb79b5e7efa7e1e99f45260aaced13064053",
                 "shasum": ""
             },
             "require": {
@@ -763,7 +767,74 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-04-07 18:36:25"
+            "time": "2013-04-08 15:37:06"
+        },
+        {
+            "name": "fsc/hateoas-bundle",
+            "version": "dev-master",
+            "target-dir": "FSC/HateoasBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TheFootballSocialClub/FSCHateoasBundle.git",
+                "reference": "117e3a9d6434041d907c4a46eac541ba649255c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TheFootballSocialClub/FSCHateoasBundle/zipball/117e3a9d6434041d907c4a46eac541ba649255c6",
+                "reference": "117e3a9d6434041d907c4a46eac541ba649255c6",
+                "shasum": ""
+            },
+            "require": {
+                "jms/metadata": ">=1.1,<2.0",
+                "jms/serializer": "0.12.*",
+                "jms/serializer-bundle": "*",
+                "php": ">=5.3.0",
+                "symfony/framework-bundle": ">=2.1,<2.3-dev",
+                "symfony/property-access": "2.2.*"
+            },
+            "require-dev": {
+                "pagerfanta/pagerfanta": "*",
+                "symfony/browser-kit": "*",
+                "symfony/class-loader": "*",
+                "symfony/form": "*",
+                "symfony/validator": "*",
+                "symfony/yaml": "*"
+            },
+            "suggest": {
+                "pagerfanta/pagerfanta": "*",
+                "symfony/form": ">=2.1,<2.3-dev",
+                "symfony/validator": ">=2.1,<2.3-dev"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "FSC\\HateoasBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrien Brault",
+                    "email": "adrien.brault@gmail.com"
+                },
+                {
+                    "name": "Baldur Rensch",
+                    "email": "brensch@gmail.com"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/TheFootballSocialClub/FSCHateoasBundle/contributors"
+                }
+            ],
+            "time": "2013-04-12 08:36:20"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1397,12 +1468,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "3b6e9da91ab6b80d98ddcb85b21662e37acc1565"
+                "reference": "0a865fd449e51b12d114a0bbf9d388a985d24432"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/3b6e9da91ab6b80d98ddcb85b21662e37acc1565",
-                "reference": "3b6e9da91ab6b80d98ddcb85b21662e37acc1565",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/0a865fd449e51b12d114a0bbf9d388a985d24432",
+                "reference": "0a865fd449e51b12d114a0bbf9d388a985d24432",
                 "shasum": ""
             },
             "require": {
@@ -1455,7 +1526,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2013-03-31 18:35:46"
+            "time": "2013-04-09 08:29:47"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -2166,7 +2237,8 @@
     "stability-flags": {
         "jms/serializer-bundle": 20,
         "friendsofsymfony/rest-bundle": 20,
-        "nelmio/api-doc-bundle": 20
+        "nelmio/api-doc-bundle": 20,
+        "fsc/hateoas-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

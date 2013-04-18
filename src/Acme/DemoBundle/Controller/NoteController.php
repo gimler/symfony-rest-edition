@@ -141,13 +141,14 @@ class NoteController extends FOSRestController
      */
     public function postNotesAction(Request $request)
     {
+        $session = $this->getRequest()->getSession();
+        $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
+
         $note = new Note();
+        $note->id = count($notes);
         $form = $this->createForm(new NoteType(), $note);
 
         if ($form->bind($request)->isValid()) {
-            $session = $this->getRequest()->getSession();
-
-            $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
             $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
             $notes[] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
