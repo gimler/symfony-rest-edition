@@ -78,12 +78,17 @@ fos_rest:
         templating_formats:
             html: true
     format_listener:
-        prefer_extension: true
+        rules:
+            - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+    allowed_methods_listener: true
+    access_denied_listener:
+        json: true
+    body_listener: true
 
 nelmio_api_doc: ~

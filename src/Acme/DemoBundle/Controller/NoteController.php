@@ -6,7 +6,7 @@ use Acme\DemoBundle\Form\NoteType;
 use Acme\DemoBundle\Model\Note;
 use Acme\DemoBundle\Model\NoteCollection;
 
-use FOS\Rest\Util\Codes;
+use FOS\RestBundle\Util\Codes;
 
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -113,7 +113,7 @@ class NoteController extends FOSRestController
      *
      * @return FormTypeInterface
      */
-    public function newNotesAction()
+    public function newNoteAction()
     {
         return $this->createForm(new NoteType());
     }
@@ -149,7 +149,8 @@ class NoteController extends FOSRestController
         $note->id = count($notes);
         $form = $this->createForm(new NoteType(), $note);
 
-        if ($form->bind($request)->isValid()) {
+        $form->submit($request);
+        if ($form->isValid()) {
             $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
             $notes[] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
@@ -239,7 +240,8 @@ class NoteController extends FOSRestController
 
         $form = $this->createForm(new NoteType(), $note);
 
-        if ($form->bind($request)->isValid()) {
+        $form->submit($request);
+        if ($form->isValid()) {
             if (!isset($note->secret)) {
                 $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
             }
