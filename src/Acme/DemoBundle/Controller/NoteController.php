@@ -4,6 +4,7 @@ namespace Acme\DemoBundle\Controller;
 
 use Acme\DemoBundle\Form\NoteType;
 use Acme\DemoBundle\Model\Note;
+use Acme\DemoBundle\Model\NoteCollection;
 
 use FOS\Rest\Util\Codes;
 
@@ -61,7 +62,7 @@ class NoteController extends FOSRestController
         $notes = $session->get(self::SESSION_CONTEXT_NOTE, array());
         $notes = array_slice($notes, $start, $limit, true);
 
-        return array('notes' => $notes);
+        return new NoteCollection($notes, $start, $limit);
     }
 
     /**
@@ -199,7 +200,7 @@ class NoteController extends FOSRestController
     }
 
     /**
-     * Update existing note from the submitted data.
+     * Update existing note from the submitted data or create a new note at a specific location
      *
      * @ApiDoc(
      *   resource = true,
@@ -208,13 +209,11 @@ class NoteController extends FOSRestController
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     400 = "Returned when the form has errors",
-     *     404 = "Returned when the note is not found"
      *   }
      * )
      *
      * @Annotations\View(
-     *   template="AcmeDemoBundle:Note:editNote.html.twig",
-     *   statusCode=Codes::HTTP_BAD_REQUEST
+     *   template="AcmeDemoBundle:Note:editNote.html.twig"
      * )
      *
      * @param Request $request the request object
@@ -230,17 +229,24 @@ class NoteController extends FOSRestController
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
-            throw $this->createNotFoundException("Note does not exist.");
+            $note = new Note();
+            $note->id = count($notes);
+            $statusCode = Codes::HTTP_CREATED;
+        } else {
+            $note = $notes[$id];
+            $statusCode = Codes::HTTP_OK;
         }
-        $note = $notes[$id];
 
         $form = $this->createForm(new NoteType(), $note);
 
         if ($form->bind($request)->isValid()) {
+            if (!isset($note->secret)) {
+                $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
+            }
             $notes[$id] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
-            return $this->routeRedirectView('get_notes', array(), Codes::HTTP_OK);
+            return $this->routeRedirectView('get_notes', array(), $statusCode);
         }
 
         return array(
@@ -257,9 +263,6 @@ class NoteController extends FOSRestController
      *   description = "Creates a new note from the submitted data.",
      *   statusCodes={
      *     204="Returned when successful",
-     *     404={
-     *       "Returned when the note is not found",
-     *     }
      *   }
      * )
      *
@@ -275,11 +278,10 @@ class NoteController extends FOSRestController
         $session = $this->getRequest()->getSession();
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
-        if (!isset($notes[$id])) {
-            throw $this->createNotFoundException("Note does not exist.");
+        if (isset($notes[$id])) {
+            unset($notes[$id]);
+            $session->set(self::SESSION_CONTEXT_NOTE, $notes);
         }
-        unset($notes[$id]);
-        $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
         return $this->routeRedirectView('get_notes', array(), Codes::HTTP_NO_CONTENT);
     }
