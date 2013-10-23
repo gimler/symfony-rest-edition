@@ -84,6 +84,10 @@ Using the console after installing httpied.org:
     http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
     http http://symfony-rest-edition.lo/app_dev.php/notes?offset=1&limit=1 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
 
+To run the tests install PHPUnit 3.7+ and call:
+
+    phpunit -c app/
+
 4) Getting started with Symfony
 -------------------------------
 
@@ -170,7 +174,7 @@ It comes pre-configured with the following bundles:
 
   * [**FOSRestBundle**][16] - Adds rest functionality
 
-  * [**FSCHateoasBundle**] - Adds HATEOAS support
+  * [**FSCHateoasBundle**][18] - Adds HATEOAS support
 
   * [**NelmioApiDocBundle**][17] - Add API documentation features
 

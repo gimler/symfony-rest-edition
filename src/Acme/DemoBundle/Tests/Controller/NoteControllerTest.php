@@ -36,7 +36,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"notes":[]}', $response->getContent());
+        $this->assertEquals('{"notes":[],"limit":5}', $response->getContent());
 
         // list
         $this->createNote('my note for list');
@@ -46,7 +46,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"notes":[{"message":"my note for list","links":{"self":{"href":"http:\/\/localhost\/notes\/0"},"notes":{"href":"http:\/\/localhost\/notes"}}}]}', $response->getContent());
+        $this->assertEquals('{"notes":[{"message":"my note for list","links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5}', $response->getContent());
     }
 
     public function testGetNote()
@@ -55,7 +55,7 @@ class NoteControllerTest extends WebTestCase
         $response = $this->client->getResponse();
 
         $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals('{"code":404,"message":"Note does not exist."}', $response->getContent());
 
         $this->createNote('my note for get');
 
@@ -64,7 +64,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"message":"my note for get","links":{"self":{"href":"http:\/\/localhost\/notes\/0"},"notes":{"href":"http:\/\/localhost\/notes"}}}', $response->getContent());
+        $this->assertEquals('{"message":"my note for get","links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $response->getContent());
     }
 
     public function testNewNote()
@@ -94,7 +94,7 @@ class NoteControllerTest extends WebTestCase
         $response = $this->client->getResponse();
 
         $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals('{"code":404,"message":"Note does not exist."}', $response->getContent());
 
         $this->createNote('my note for post');
 
@@ -108,27 +108,20 @@ class NoteControllerTest extends WebTestCase
 
     public function testPutNote()
     {
-        $csrfToken = $this->client
-            ->getContainer()
-            ->get('form.csrf_provider')
-            ->generateCsrfToken('note');
-
         $this->client->request('PUT', '/notes/0.json', array(
             'note' => array(
-                '_token'  => $csrfToken,
-                'message' => 'my note for put'
+                'message' => ''
             )
         ));
         $response = $this->client->getResponse();
 
-        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals(400, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"code":400,"message":"Validation Failed","errors":{"children":{"message":{"errors":["This value should not be blank."]}}}}', $response->getContent());
 
         $this->createNote('my note for post');
 
         $this->client->request('PUT', '/notes/0.json', array(
             'note' => array(
-                '_token'  => $csrfToken,
                 'message' => 'my note for put'
             )
         ));
@@ -144,8 +137,8 @@ class NoteControllerTest extends WebTestCase
         $this->client->request('GET', '/notes/0/remove.json');
         $response = $this->client->getResponse();
 
-        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('', $response->getContent());
 
         $this->createNote('my note for get');
 
@@ -164,8 +157,8 @@ class NoteControllerTest extends WebTestCase
         $this->client->request('DELETE', '/notes/0.json');
         $response = $this->client->getResponse();
 
-        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"status":"error","status_code":404,"status_text":"Not Found","current_content":"","message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('', $response->getContent());
 
         $this->createNote('my note for get');
 
@@ -181,14 +174,8 @@ class NoteControllerTest extends WebTestCase
 
     protected function createNote($message)
     {
-        $csrfToken = $this->client
-            ->getContainer()
-            ->get('form.csrf_provider')
-            ->generateCsrfToken('note');
-
         $this->client->request('POST', '/notes.json', array(
             'note' => array(
-                '_token'  => $csrfToken,
                 'message' => $message
             )
         ));
