@@ -4,6 +4,7 @@ namespace Acme\DemoBundle\Controller;
 
 use Acme\DemoBundle\Form\NoteType;
 use Acme\DemoBundle\Model\Note;
+use Acme\DemoBundle\Model\NoteCollection;
 
 use FOS\Rest\Util\Codes;
 
@@ -61,7 +62,7 @@ class NoteController extends FOSRestController
         $notes = $session->get(self::SESSION_CONTEXT_NOTE, array());
         $notes = array_slice($notes, $start, $limit, true);
 
-        return array('notes' => $notes);
+        return new NoteCollection($notes, $start, $limit);
     }
 
     /**
