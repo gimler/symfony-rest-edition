@@ -71,7 +71,14 @@ Symfony Application online" link of the `config.php` page.
 
 To see a real-live Symfony page in action, access the following page:
 
-    web/app_dev.php/demo/hello/Fabien
+    web/app_dev.php/notes
+
+Using the console after installing httpied.org:
+
+    http http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
+    http POST http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
+    http DELETE http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
 
 4) Getting started with Symfony
 -------------------------------
