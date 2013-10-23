@@ -7,6 +7,10 @@
 {% block content %}
     <h1 class="title">{{ 'note.list.headline'|trans({}, 'AcmeDemoBundle') }}</h1>
 
+    <p>
+        using offset: {{ data.offset }}, limit: {{ data.limit }}
+    </p>
+
     <ul id="note-list">
         {% for id, note in data.notes %}
         <li>

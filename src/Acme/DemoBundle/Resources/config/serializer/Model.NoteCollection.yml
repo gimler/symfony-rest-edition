@@ -8,7 +8,7 @@ Acme\DemoBundle\Model\NoteCollection:
       xml_list:
         inline: true
         entry_name: note
-    start:
+    offset:
       expose: true
       type: integer
       xml_attribute: true

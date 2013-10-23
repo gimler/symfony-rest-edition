@@ -12,7 +12,7 @@ class NoteCollection
     /**
      * @var integer
      */
-    public $start;
+    public $offset;
 
     /**
      * @var integer
@@ -21,13 +21,13 @@ class NoteCollection
 
     /**
      * @param Note[] $notes
-     * @param integer $start
+     * @param integer $offset
      * @param integer $limit
      */
-    public function __construct($notes = array(), $start = null, $limit = null)
+    public function __construct($notes = array(), $offset = null, $limit = null)
     {
         $this->notes = $notes;
-        $this->start = $start;
+        $this->offset = $offset;
         $this->limit = $limit;
     }
 }

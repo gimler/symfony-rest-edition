@@ -11,6 +11,7 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\View\RouteRedirectView;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -33,14 +34,13 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "List all notes",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   }
      * )
      *
-     * @Annotations\QueryParam(name="lastId", requirements="\d+", nullable=true, description="Last id from previous call.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many records.")
+     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing notes.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many notes to return.")
      *
      * @Annotations\View()
      *
@@ -53,24 +53,21 @@ class NoteController extends FOSRestController
     {
         $session = $request->getSession();
 
-        $start = 0;
-        if (null !== $lastId = $paramFetcher->get('lastId')) {
-            $start = $lastId + 1;
-        }
+        $offset = $paramFetcher->get('offset');
+        $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
         $notes = $session->get(self::SESSION_CONTEXT_NOTE, array());
         $notes = array_slice($notes, $start, $limit, true);
 
-        return new NoteCollection($notes, $start, $limit);
+        return new NoteCollection($notes, $offset, $limit);
     }
 
     /**
-     * Get single note,
+     * Get a single note.
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Gets single note for a given id",
      *   output = "Acme\DemoBundle\Model\Note",
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -103,7 +100,6 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Presents the form to use to create a new Quiz.",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   }
@@ -123,7 +119,6 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Creates a new note from the submitted data.",
      *   input = "Acme\DemoBundle\Form\NoteType",
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -164,11 +159,10 @@ class NoteController extends FOSRestController
     }
 
     /**
-     * Presents the form to use to update existing note.
+     * Presents the form to use to update an existing note.
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Presents the form to use to update existing note.",
      *   statusCodes={
      *     200="Returned when successful",
      *     404={
@@ -201,11 +195,10 @@ class NoteController extends FOSRestController
     }
 
     /**
-     * Update existing note from the submitted data or create a new note at a specific location
+     * Update existing note from the submitted data or create a new note at a specific location.
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Update existing note from the submitted data.",
      *   input = "Acme\DemoBundle\Form\NoteType",
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -258,11 +251,10 @@ class NoteController extends FOSRestController
 
 
     /**
-     * Removes a note
+     * Removes a note.
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Creates a new note from the submitted data.",
      *   statusCodes={
      *     204="Returned when successful",
      *   }
@@ -277,7 +269,7 @@ class NoteController extends FOSRestController
      */
     public function deleteNotesAction(Request $request, $id)
     {
-        $session = $this->getRequest()->getSession();
+        $session = $request->getSession();
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (isset($notes[$id])) {
@@ -289,11 +281,10 @@ class NoteController extends FOSRestController
     }
 
     /**
-     * Removes a note
+     * Removes a note.
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Creates a new note from the submitted data.",
      *   statusCodes={
      *     204="Returned when successful",
      *     404={

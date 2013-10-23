@@ -79,6 +79,10 @@ Using the console after installing httpied.org:
     http POST http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
     http DELETE http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
     http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
+    http http://symfony-rest-edition.lo/app_dev.php/notes?offset=1&limit=1 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
 
 4) Getting started with Symfony
 -------------------------------
