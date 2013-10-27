@@ -12,4 +12,9 @@ note:
     headline: Notiz \#%id% bearbeiten
     submit: Notiz aktualisieren
   remove:
-    link: remove
+    link: entfernen
+  offset: Offset
+  limit: Limit
+api:
+  doc:
+    link: API Dokumentation

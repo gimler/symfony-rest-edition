@@ -13,3 +13,8 @@ note:
     submit: update note
   remove:
     link: remove
+  offset: offset
+  limit: limit
+api:
+  doc:
+    link: API documentation

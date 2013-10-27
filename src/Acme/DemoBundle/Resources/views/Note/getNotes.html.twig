@@ -8,7 +8,7 @@
     <h1 class="title">{{ 'note.list.headline'|trans({}, 'AcmeDemoBundle') }}</h1>
 
     <p>
-        using offset: {{ data.offset }}, limit: {{ data.limit }}
+        {{ 'note.offset'|trans({}, 'AcmeDemoBundle') }}: {{ data.offset ?: '-' }}, {{ 'note.limit'|trans({}, 'AcmeDemoBundle') }}: {{ data.limit }}
     </p>
 
     <ul id="note-list">

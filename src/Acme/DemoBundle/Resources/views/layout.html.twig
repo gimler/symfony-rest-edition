@@ -26,6 +26,10 @@
 
     <div class="block">
         {% block content %}{% endblock %}
+
+        <p>
+            <a href="{{ path('nelmio_api_doc_index') }}">{{ 'api.doc.link'|trans({}, 'AcmeDemoBundle') }}</a>
+        </p>
     </div>
 
     {% if code is defined %}

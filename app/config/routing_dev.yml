@@ -2,7 +2,7 @@ _welcome:
     pattern:  /
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
-        route: sonata_admin_dashboard
+        route: get_notes
         permanent: true # this for 301
 
 _demo_note:
