@@ -73,16 +73,38 @@ To see a real-live Symfony page in action, access the following page:
 
     web/app_dev.php/notes
 
-Using the console after installing httpied.org:
+Using the console after installing httpied.org first determine a valid session ID,
+since the demo app uses a session to "persist" data for simplicity. You can either
+use some tool to inspect response headers in your browser to determine an active
+session ID or use httpie with a HEAD request copy the ``PHPSESSID`` value from the
+``Set-Cookie`` header:
 
-    http http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
-    http POST http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
-    http DELETE http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json < note.json
-    http http://symfony-rest-edition.lo/app_dev.php/notes?offset=1&limit=1 Cookie:PHPSESSID=kjbngjjanrhs1ldujilmfsl3v0 --json
+    http HEAD http://symfony-rest-edition.lo/app_dev.php/notes
+
+So for example:
+
+    HTTP/1.1 200 OK
+    Allow: GET, POST
+    Cache-Control: no-cache
+    Content-Type: text/html; charset=UTF-8
+    Date: Sun, 27 Oct 2013 07:05:03 GMT
+    Server: Apache/2.2.24 (Unix) DAV/2 PHP/5.4.20 mod_ssl/2.2.24 OpenSSL/0.9.8y
+    Set-Cookie: PHPSESSID=lclnc7aem1gdgnmo9nrr4t7hj0; path=/
+    X-Debug-Token: 67f03d
+    X-Powered-By: PHP/5.4.20
+
+Would mean that the session ID is ``lclnc7aem1gdgnmo9nrr4t7hj0``. Now replace ``[sessionid]``
+with the session ID you determined and run the following requests:
+
+    http http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=[sessionid] --json
+    http POST http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=[sessionid] --json < note.json
+    http http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json
+    http DELETE http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
+    http http://symfony-rest-edition.lo/app_dev.php/notes?offset=1&limit=1 Cookie:PHPSESSID=[sessionid] --json
 
 To run the tests install PHPUnit 3.7+ and call:
 
