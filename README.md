@@ -79,7 +79,7 @@ use some tool to inspect response headers in your browser to determine an active
 session ID or use httpie with a HEAD request copy the ``PHPSESSID`` value from the
 ``Set-Cookie`` header:
 
-    http HEAD http://symfony-rest-edition.lo/app_dev.php/notes
+    http HEAD http://symfony-rest-edition.lo/app_dev.php/notes -a restapi:secretpw
 
 So for example:
 
@@ -96,15 +96,15 @@ So for example:
 Would mean that the session ID is ``lclnc7aem1gdgnmo9nrr4t7hj0``. Now replace ``[sessionid]``
 with the session ID you determined and run the following requests:
 
-    http http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=[sessionid] --json
-    http POST http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=[sessionid] --json < note.json
-    http http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json
-    http DELETE http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
-    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json < note.json
-    http http://symfony-rest-edition.lo/app_dev.php/notes?offset=1&limit=1 Cookie:PHPSESSID=[sessionid] --json
+    http http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw
+    http POST http://symfony-rest-edition.lo/app_dev.php/notes Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw < note.json
+    http http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw
+    http DELETE http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw < note.json
+    http PUT http://symfony-rest-edition.lo/app_dev.php/notes/0 Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw < note.json
+    http http://symfony-rest-edition.lo/app_dev.php/notes?offset=1&limit=1 Cookie:PHPSESSID=[sessionid] --json -a restapi:secretpw
 
 To run the tests install PHPUnit 3.7+ and call:
 
