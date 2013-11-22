@@ -19,7 +19,8 @@
         "jms/serializer-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "1.0.*",
         "nelmio/api-doc-bundle": "dev-master",
-        "fsc/hateoas-bundle": "dev-master"
+        "fsc/hateoas-bundle": "dev-master",
+        "liip/cache-control-bundle": "dev-support_method_ips_attributes"
     },
     "scripts": {
         "post-install-cmd": [
