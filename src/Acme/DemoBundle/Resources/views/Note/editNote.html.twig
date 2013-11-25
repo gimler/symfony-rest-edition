@@ -1,0 +1,19 @@
+{% extends "AcmeDemoBundle::layout.html.twig" %}
+
+{% block title "Symfony - Notes" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'note.edit.headline'|trans({'%id%': id}, 'AcmeDemoBundle') }}</h1>
+
+    <form action="{{ url('put_notes', {'id': id}) }}" method="POST" {{ form_enctype(form) }}>
+        <input type="hidden" name="_method" value="put" />
+
+        {{ form_widget(form) }}
+
+        <input type="submit" value="{% trans from 'AcmeDemoBundle' %}note.edit.submit{% endtrans %}">
+    </form>
+{% endblock %}
+
+{% set code = code(_self) %}

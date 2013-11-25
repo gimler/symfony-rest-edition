@@ -141,13 +141,13 @@ class NoteController extends FOSRestController
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
 
         $note = new Note();
-        $note->id = count($notes);
+        $note->id = $this->getValidIndex($notes);
         $form = $this->createForm(new NoteType(), $note);
 
         $form->submit($request);
         if ($form->isValid()) {
             $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
-            $notes[] = $note;
+            $notes[$note->id] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
             return $this->routeRedirectView('get_notes');
@@ -164,10 +164,8 @@ class NoteController extends FOSRestController
      * @ApiDoc(
      *   resource = true,
      *   statusCodes={
-     *     200="Returned when successful",
-     *     404={
-     *       "Returned when the note is not found",
-     *     }
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the note is not found"
      *   }
      * )
      *
@@ -201,13 +199,15 @@ class NoteController extends FOSRestController
      *   resource = true,
      *   input = "Acme\DemoBundle\Form\NoteType",
      *   statusCodes = {
-     *     200 = "Returned when successful",
+     *     201 = "Returned when a new resource is created",
+     *     204 = "Returned when successful",
      *     400 = "Returned when the form has errors",
      *   }
      * )
      *
      * @Annotations\View(
-     *   template="AcmeDemoBundle:Note:editNote.html.twig"
+     *   template="AcmeDemoBundle:Note:editNote.html.twig",
+     *   templateVar="form"
      * )
      *
      * @param Request $request the request object
@@ -224,11 +224,11 @@ class NoteController extends FOSRestController
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
             $note = new Note();
-            $note->id = count($notes);
+            $note->id = $id;
             $statusCode = Codes::HTTP_CREATED;
         } else {
             $note = $notes[$id];
-            $statusCode = Codes::HTTP_OK;
+            $statusCode = Codes::HTTP_NO_CONTENT;
         }
 
         $form = $this->createForm(new NoteType(), $note);
@@ -244,9 +244,7 @@ class NoteController extends FOSRestController
             return $this->routeRedirectView('get_notes', array(), $statusCode);
         }
 
-        return array(
-            'form' => $form
-        );
+        return $form;
     }
 
 
@@ -302,4 +300,22 @@ class NoteController extends FOSRestController
     {
         return $this->deleteNotesAction($request, $id);
     }
+
+    /**
+     * Get a valid index key.
+     *
+     * @param array $notes
+     *
+     * @return int $id
+     */
+    private function getValidIndex($notes)
+    {
+        $id = count($notes);
+        while (isset($notes[$id])) {
+            $id++;
+        }
+
+        return $id;
+    }
+
 }
