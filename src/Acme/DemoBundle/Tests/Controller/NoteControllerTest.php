@@ -114,7 +114,7 @@ class NoteControllerTest extends WebTestCase
         $this->assertEquals('{"children":{"message":[]}}', $response->getContent());
     }
 
-    public function testPutNote()
+    public function testPutShouldModifyANote()
     {
         $client = $this->getClient(true);
 
@@ -139,6 +139,32 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
+        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
+    }
+
+    public function testPutShouldCreateANote()
+    {
+        $client = $this->getClient(true);
+
+        $client->request('PUT', '/notes/0.json', array(
+            'note' => array(
+                'message' => ''
+            )
+        ));
+        $response = $client->getResponse();
+
+        $this->assertEquals(400, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"code":400,"message":"Validation Failed","errors":{"children":{"message":{"errors":["This value should not be blank."]}}}}', $response->getContent());
+
+        $client->request('PUT', '/notes/0.json', array(
+            'note' => array(
+                'message' => 'my note for put'
+            )
+        ));
+        $response = $client->getResponse();
+
+        $this->assertJsonHeader($response);
+        $this->assertEquals(201, $response->getStatusCode(), $response->getContent());
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
