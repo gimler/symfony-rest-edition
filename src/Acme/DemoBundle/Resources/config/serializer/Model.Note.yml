@@ -5,3 +5,8 @@ Acme\DemoBundle\Model\Note:
     message:
       expose: true
       type: string
+      groups: [standard, restapi]
+    secret:
+      expose: true
+      type: string
+      groups: [restapi]

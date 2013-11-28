@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\RouteRedirectView;
 
+use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -92,7 +93,11 @@ class NoteController extends FOSRestController
             throw $this->createNotFoundException("Note does not exist.");
         }
 
-        return $notes[$id];
+        $view = new View($notes[$id]);
+        $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
+        $view->getSerializationContext()->setGroups($group);
+
+        return $view;
     }
 
     /**
