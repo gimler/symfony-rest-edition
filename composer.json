@@ -17,7 +17,7 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "jms/serializer-bundle": "dev-master",
-        "friendsofsymfony/rest-bundle": "1.0.*",
+        "friendsofsymfony/rest-bundle": "1.1.*",
         "nelmio/api-doc-bundle": "dev-master",
         "fsc/hateoas-bundle": "dev-master",
         "liip/cache-control-bundle": "~1.0.5"

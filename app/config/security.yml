@@ -4,14 +4,14 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
-        ROLE_NO_CSRF_REQUIRED: ROLE_USER
+        ROLE_API:         ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         in_memory:
             memory:
                 users:
-                    restapi:  { password: secretpw, roles: [ 'ROLE_NO_CSRF_REQUIRED' ] }
+                    restapi:  { password: secretpw, roles: [ 'ROLE_API' ] }
 
     firewalls:
         dev:

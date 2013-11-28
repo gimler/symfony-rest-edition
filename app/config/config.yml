@@ -69,6 +69,7 @@ sensio_framework_extra:
     view: { annotations: false }
 
 fos_rest:
+    disable_csrf_role: ROLE_API
     param_fetcher_listener: true
     view:
         view_response_listener: 'force'
