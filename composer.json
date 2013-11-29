@@ -1,5 +1,7 @@
 {
     "name": "gimler/symfony-rest-edition",
+    "license": "MIT",
+    "type": "project",
     "description": "The \"Symfony REST Edition\" distribution",
     "autoload": {
         "psr-0": { "": "src/" }
