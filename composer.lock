@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ff5d58f899a2857b44947b2bf74e2670",
+    "hash": "81b824c77ea29aa969133d2e424c50cf",
     "packages": [
         {
             "name": "dflydev/markdown",
@@ -1230,17 +1230,17 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "dev-master",
+            "version": "2.4.2",
             "target-dir": "Nelmio/ApiDocBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "2ceea4871a6205c421dc3ce9b0a7b350aafe7000"
+                "reference": "4ff018b11152ee73d4a690ea69b02f41fd96d24d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/2ceea4871a6205c421dc3ce9b0a7b350aafe7000",
-                "reference": "2ceea4871a6205c421dc3ce9b0a7b350aafe7000",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/4ff018b11152ee73d4a690ea69b02f41fd96d24d",
+                "reference": "4ff018b11152ee73d4a690ea69b02f41fd96d24d",
                 "shasum": ""
             },
             "require": {
@@ -1301,7 +1301,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2013-11-18 10:06:15"
+            "time": "2013-11-14 16:01:56"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -2279,7 +2279,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jms/serializer-bundle": 20,
-        "nelmio/api-doc-bundle": 20,
         "willdurand/hateoas": 20,
         "willdurand/hateoas-bundle": 20
     },
