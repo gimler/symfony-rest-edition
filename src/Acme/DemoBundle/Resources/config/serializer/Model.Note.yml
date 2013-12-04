@@ -10,3 +10,11 @@ Acme\DemoBundle\Model\Note:
       expose: true
       type: string
       groups: [restapi]
+  relations:
+    -
+      rel: self
+      href:
+        route: get_note
+        parameters:
+          id: expr(object.id)
+        absolute: true

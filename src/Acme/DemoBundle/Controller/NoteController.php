@@ -95,7 +95,7 @@ class NoteController extends FOSRestController
 
         $view = new View($notes[$id]);
         $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
-        $view->getSerializationContext()->setGroups($group);
+        $view->getSerializationContext()->setGroups(array('Default', $group));
 
         return $view;
     }
