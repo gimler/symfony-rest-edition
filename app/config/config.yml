@@ -100,3 +100,5 @@ liip_cache_control:
     rules:
         # the controls section values are used in a call to Response::setCache();
         - { path: ^/notes, method: [GET, HEAD], controls: { public: true, max_age: 15, s_maxage: 30, last_modified: "-1 hour" }, vary: [Accept-Encoding, Accept-Language] }
+
+bazinga_hateoas: ~
