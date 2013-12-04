@@ -68,7 +68,6 @@ class NoteController extends FOSRestController
      * Get a single note.
      *
      * @ApiDoc(
-     *   resource = true,
      *   output = "Acme\DemoBundle\Model\Note",
      *   statusCodes = {
      *     200 = "Returned when successful",
