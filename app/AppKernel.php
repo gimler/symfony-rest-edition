@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new FSC\HateoasBundle\FSCHateoasBundle(),
             new Liip\CacheControlBundle\LiipCacheControlBundle(),
         );
 
