@@ -36,7 +36,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"notes":[],"limit":5}', $response->getContent());
+        $this->assertEquals('{"notes":[],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $response->getContent());
 
         // list
         $this->createNote($client, 'my note for list');
@@ -47,7 +47,7 @@ class NoteControllerTest extends WebTestCase
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
-        $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5}', $contentWithoutSecret);
+        $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $contentWithoutSecret);
     }
 
     public function testGetNote()
@@ -68,7 +68,7 @@ class NoteControllerTest extends WebTestCase
         $this->assertJsonHeader($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
-        $this->assertEquals('{"secret":"XXX","message":"my note for get","links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
+        $this->assertEquals('{"secret":"XXX","message":"my note for get","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
     }
 
     public function testNewNote()

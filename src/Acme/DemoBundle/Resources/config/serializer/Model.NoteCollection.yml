@@ -16,3 +16,19 @@ Acme\DemoBundle\Model\NoteCollection:
       expose: true
       type: integer
       xml_attribute: true
+  relations:
+    -
+      rel: self
+      href:
+        route: get_notes
+        absolute: true
+    -
+      rel: note
+      href:
+        route: get_note
+        absolute: true
+        generator: templated
+        parameters:
+          id: "{id}"
+      attributes:
+        templated: true

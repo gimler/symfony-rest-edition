@@ -10,3 +10,18 @@ Acme\DemoBundle\Model\Note:
       expose: true
       type: string
       groups: [restapi]
+  relations:
+    -
+      rel: self
+      href:
+        route: get_note
+        parameters:
+          id: expr(object.id)
+        absolute: true
+    -
+      rel: expr(object.getAssociatedEventsRel())
+      embed:
+        content: expr(object.getAssociatedEvents())
+        xmlElementName: events
+        exclusion:
+          exclude_if: expr(object.id === 0)

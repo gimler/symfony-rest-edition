@@ -68,7 +68,6 @@ class NoteController extends FOSRestController
      * Get a single note.
      *
      * @ApiDoc(
-     *   resource = true,
      *   output = "Acme\DemoBundle\Model\Note",
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -95,7 +94,7 @@ class NoteController extends FOSRestController
 
         $view = new View($notes[$id]);
         $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
-        $view->getSerializationContext()->setGroups($group);
+        $view->getSerializationContext()->setGroups(array('Default', $group));
 
         return $view;
     }
@@ -251,7 +250,6 @@ class NoteController extends FOSRestController
 
         return $form;
     }
-
 
     /**
      * Removes a note.

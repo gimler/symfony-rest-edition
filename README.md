@@ -198,9 +198,11 @@ It comes pre-configured with the following bundles:
 
   * [**FOSRestBundle**][16] - Adds rest functionality
 
-  * [**FSCHateoasBundle**][18] - Adds HATEOAS support
-
   * [**NelmioApiDocBundle**][17] - Add API documentation features
+
+  * [**BazingaHateoasBundle**][18] - Adds HATEOAS support
+
+  * [**HautelookTemplatedUriBundle**][19] - Adds Templated URIs (RFC 6570) support
 
 Enjoy!
 
@@ -221,4 +223,5 @@ Enjoy!
 [15]: http://symfony.com/doc/2.1/bundles/SensioGeneratorBundle/index.html
 [16]: https://github.com/FriendsOfSymfony/FOSRestBundle
 [17]: https://github.com/nelmio/NelmioApiDocBundle
-[18]: https://github.com/TheFootballSocialClub/FSCHateoasBundle
+[18]: https://github.com/willdurand/BazingaHateoasBundle
+[19]: https://github.com/hautelook/TemplatedUriBundle
