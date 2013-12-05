@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7491c59c8bf0f72e87359912e83e72a0",
+    "hash": "344b0e443a068b9802e0bb0d671f7889",
     "packages": [
         {
             "name": "dflydev/markdown",
@@ -759,26 +759,30 @@
         },
         {
             "name": "hautelook/templated-uri-bundle",
-            "version": "dev-master",
+            "version": "1.0.0",
             "target-dir": "Hautelook/TemplatedUriBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hautelook/TemplatedUriBundle.git",
-                "reference": "60ca2c9f69da48276022164fede316ab43d36402"
+                "reference": "b11bd3f901f603c4d405b6b1aea91be4a5c2a663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hautelook/TemplatedUriBundle/zipball/60ca2c9f69da48276022164fede316ab43d36402",
-                "reference": "60ca2c9f69da48276022164fede316ab43d36402",
+                "url": "https://api.github.com/repos/hautelook/TemplatedUriBundle/zipball/b11bd3f901f603c4d405b6b1aea91be4a5c2a663",
+                "reference": "b11bd3f901f603c4d405b6b1aea91be4a5c2a663",
                 "shasum": ""
             },
             "require": {
+                "hautelook/templated-uri-router": "~1.0",
                 "php": ">=5.3.0",
-                "symfony/framework-bundle": "~2.1",
-                "symfony/http-kernel": "~2.1",
-                "symfony/routing": "~2.1"
+                "symfony/framework-bundle": "~2.1"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Hautelook\\TemplatedUriBundle": ""
@@ -805,7 +809,64 @@
                 "url",
                 "xml"
             ],
-            "time": "2013-12-05 00:21:33"
+            "time": "2013-12-05 17:57:16"
+        },
+        {
+            "name": "hautelook/templated-uri-router",
+            "version": "1.0.0",
+            "target-dir": "Hautelook/TemplatedUriRouter",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hautelook/TemplatedUriRouter.git",
+                "reference": "a455b924a71da5f3564a6502a55a0a409d3a19f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hautelook/TemplatedUriRouter/zipball/a455b924a71da5f3564a6502a55a0a409d3a19f3",
+                "reference": "a455b924a71da5f3564a6502a55a0a409d3a19f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/routing": "~2.1"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Hautelook\\TemplatedUriRouter": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baldur Rensch",
+                    "email": "brensch@gmail.com"
+                }
+            ],
+            "description": "Symfony2 RFC-6570 compatible router and URL Generator",
+            "homepage": "http://www.hautelooktech.com/",
+            "keywords": [
+                "HATEOAS",
+                "RFC 6570",
+                "Symfony2",
+                "json",
+                "router",
+                "uri",
+                "url",
+                "xml"
+            ],
+            "time": "2013-12-05 17:55:28"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1018,12 +1079,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "9cdfef0a473e166cad13170c8f35d67023ebd083"
+                "reference": "bb15db3e661168f4310fad48b86915ff1ca33795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/9cdfef0a473e166cad13170c8f35d67023ebd083",
-                "reference": "9cdfef0a473e166cad13170c8f35d67023ebd083",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/bb15db3e661168f4310fad48b86915ff1ca33795",
+                "reference": "bb15db3e661168f4310fad48b86915ff1ca33795",
                 "shasum": ""
             },
             "require": {
@@ -1079,7 +1140,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2013-12-04 16:42:31"
+            "time": "2013-12-05 14:36:11"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2160,12 +2221,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/Hateoas.git",
-                "reference": "c7ffcb446eff1e24ebba1ac487d3c74b74ba4945"
+                "reference": "12498c5fe162d4779f99698022ca5a6915bb70ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/Hateoas/zipball/c7ffcb446eff1e24ebba1ac487d3c74b74ba4945",
-                "reference": "c7ffcb446eff1e24ebba1ac487d3c74b74ba4945",
+                "url": "https://api.github.com/repos/willdurand/Hateoas/zipball/12498c5fe162d4779f99698022ca5a6915bb70ce",
+                "reference": "12498c5fe162d4779f99698022ca5a6915bb70ce",
                 "shasum": ""
             },
             "require": {
@@ -2215,21 +2276,21 @@
                 }
             ],
             "description": "A PHP library to support implementing representations for HATEOAS REST web services",
-            "time": "2013-12-05 14:01:30"
+            "time": "2013-12-05 16:11:11"
         },
         {
             "name": "willdurand/hateoas-bundle",
-            "version": "dev-master",
+            "version": "0.0.3",
             "target-dir": "Bazinga/Bundle/HateoasBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaHateoasBundle.git",
-                "reference": "4d1b79c7b1698598dff9d65d074c44504ef0726c"
+                "reference": "36b9083b3d26f49d5e67c1e51c41f1a4ad77446a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaHateoasBundle/zipball/4d1b79c7b1698598dff9d65d074c44504ef0726c",
-                "reference": "4d1b79c7b1698598dff9d65d074c44504ef0726c",
+                "url": "https://api.github.com/repos/willdurand/BazingaHateoasBundle/zipball/36b9083b3d26f49d5e67c1e51c41f1a4ad77446a",
+                "reference": "36b9083b3d26f49d5e67c1e51c41f1a4ad77446a",
                 "shasum": ""
             },
             "require": {
@@ -2238,7 +2299,7 @@
                 "willdurand/hateoas": "~2.0@dev"
             },
             "require-dev": {
-                "symfony/expression-language": "~2.4@dev"
+                "symfony/expression-language": "~2.4"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2267,7 +2328,7 @@
                 "HATEOAS",
                 "rest"
             ],
-            "time": "2013-11-15 14:14:14"
+            "time": "2013-12-05 15:08:29"
         },
         {
             "name": "willdurand/negotiation",
@@ -2377,9 +2438,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jms/serializer-bundle": 20,
-        "willdurand/hateoas": 20,
-        "willdurand/hateoas-bundle": 20,
-        "hautelook/templated-uri-bundle": 20
+        "willdurand/hateoas": 20
     },
     "platform": {
         "php": ">=5.3.3"

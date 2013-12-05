@@ -27,7 +27,7 @@ Acme\DemoBundle\Model\NoteCollection:
       href:
         route: get_note
         absolute: true
-        generator: templated
+        generator: templated_uri
         parameters:
           id: "{id}"
       attributes:
