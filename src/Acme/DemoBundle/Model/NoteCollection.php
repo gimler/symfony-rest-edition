@@ -20,7 +20,7 @@ class NoteCollection
     public $limit;
 
     /**
-     * @param Note[] $notes
+     * @param Note[]  $notes
      * @param integer $offset
      * @param integer $limit
      */

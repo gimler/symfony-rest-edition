@@ -251,7 +251,6 @@ class NoteController extends FOSRestController
         return $form;
     }
 
-
     /**
      * Removes a note.
      *
