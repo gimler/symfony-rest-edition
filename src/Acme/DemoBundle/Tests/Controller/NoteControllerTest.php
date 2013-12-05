@@ -2,7 +2,8 @@
 
 namespace Acme\DemoBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Bazinga\Bundle\RestExtraBundle\Test\WebTestCase;
+use FOS\RestBundle\Util\Codes;
 use Symfony\Component\BrowserKit\Client;
 
 class NoteControllerTest extends WebTestCase
@@ -27,14 +28,14 @@ class NoteControllerTest extends WebTestCase
         $client->request('HEAD', '/notes.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
+        $this->assertJsonResponse($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
 
         // empty list
         $client->request('GET', '/notes.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
+        $this->assertJsonResponse($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $this->assertEquals('{"notes":[],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $response->getContent());
 
@@ -44,7 +45,7 @@ class NoteControllerTest extends WebTestCase
         $client->request('GET', '/notes.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
+        $this->assertJsonResponse($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
         $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $contentWithoutSecret);
@@ -65,7 +66,7 @@ class NoteControllerTest extends WebTestCase
         $client->request('GET', '/notes/0.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
+        $this->assertJsonResponse($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
         $this->assertEquals('{"secret":"XXX","message":"my note for get","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
@@ -78,7 +79,7 @@ class NoteControllerTest extends WebTestCase
         $client->request('GET', '/notes/new.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
+        $this->assertJsonResponse($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $this->assertEquals('{"children":{"message":[]}}', $response->getContent());
     }
@@ -91,8 +92,7 @@ class NoteControllerTest extends WebTestCase
 
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
-        $this->assertEquals(201, $response->getStatusCode(), $response->getContent());
+        $this->assertJsonResponse($response, Codes::HTTP_CREATED);
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
@@ -111,7 +111,7 @@ class NoteControllerTest extends WebTestCase
         $client->request('GET', '/notes/0/edit.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
+        $this->assertJsonResponse($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $this->assertEquals('{"children":{"message":[]}}', $response->getContent());
     }
@@ -139,8 +139,7 @@ class NoteControllerTest extends WebTestCase
         ));
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
-        $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
+        $this->assertJsonResponse($response, Codes::HTTP_NO_CONTENT);
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
@@ -165,8 +164,7 @@ class NoteControllerTest extends WebTestCase
         ));
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
-        $this->assertEquals(201, $response->getStatusCode(), $response->getContent());
+        $this->assertJsonResponse($response, Codes::HTTP_CREATED);
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
@@ -185,8 +183,7 @@ class NoteControllerTest extends WebTestCase
         $client->request('GET', '/notes/0/remove.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
-        $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
+        $this->assertJsonResponse($response, Codes::HTTP_NO_CONTENT);
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
@@ -205,8 +202,7 @@ class NoteControllerTest extends WebTestCase
         $client->request('DELETE', '/notes/0.json');
         $response = $client->getResponse();
 
-        $this->assertJsonHeader($response);
-        $this->assertEquals(204, $response->getStatusCode(), $response->getContent());
+        $this->assertJsonResponse($response, Codes::HTTP_NO_CONTENT);
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
@@ -218,14 +214,6 @@ class NoteControllerTest extends WebTestCase
             )
         ));
         $response = $client->getResponse();
-        $this->assertEquals(201, $response->getStatusCode(), $response->getContent());
-    }
-
-    protected function assertJsonHeader($response)
-    {
-        $this->assertTrue(
-            $response->headers->contains('Content-Type', 'application/json'),
-            $response->headers
-        );
+        $this->assertJsonResponse($response, Codes::HTTP_CREATED);
     }
 }

@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Liip\CacheControlBundle\LiipCacheControlBundle(),
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new Hautelook\TemplatedUriBundle\HautelookTemplatedUriBundle(),
+            new Bazinga\Bundle\RestExtraBundle\BazingaRestExtraBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

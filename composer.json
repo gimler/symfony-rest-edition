@@ -24,7 +24,8 @@
         "liip/cache-control-bundle": "~1.0.5",
         "willdurand/hateoas": "~2.0@dev",
         "willdurand/hateoas-bundle": "~1.0@dev",
-        "hautelook/templated-uri-bundle": "dev-master"
+        "hautelook/templated-uri-bundle": "dev-master",
+        "willdurand/rest-extra-bundle": "~0.1"
     },
     "scripts": {
         "post-install-cmd": [

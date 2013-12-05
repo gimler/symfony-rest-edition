@@ -204,6 +204,8 @@ It comes pre-configured with the following bundles:
 
   * [**HautelookTemplatedUriBundle**][19] - Adds Templated URIs (RFC 6570) support
 
+  * [**BazingaRestExtraBundle**][20]
+
 Enjoy!
 
 [1]:  http://symfony.com/doc/2.1/book/installation.html
@@ -225,3 +227,4 @@ Enjoy!
 [17]: https://github.com/nelmio/NelmioApiDocBundle
 [18]: https://github.com/willdurand/BazingaHateoasBundle
 [19]: https://github.com/hautelook/TemplatedUriBundle
+[20]: https://github.com/willdurand/BazingaRestExtraBundle

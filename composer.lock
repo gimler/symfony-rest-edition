@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3a4a77d76c113a230b144bd2ded6b208",
+    "hash": "7491c59c8bf0f72e87359912e83e72a0",
     "packages": [
         {
             "name": "dflydev/markdown",
@@ -1154,17 +1154,17 @@
         },
         {
             "name": "liip/cache-control-bundle",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "target-dir": "Liip/CacheControlBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipCacheControlBundle.git",
-                "reference": "4794022ce75f60493e3bd680c5f0acf697267534"
+                "reference": "e84ae127072d22abf05aace0edeaafb0efa983f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipCacheControlBundle/zipball/4794022ce75f60493e3bd680c5f0acf697267534",
-                "reference": "4794022ce75f60493e3bd680c5f0acf697267534",
+                "url": "https://api.github.com/repos/liip/LiipCacheControlBundle/zipball/e84ae127072d22abf05aace0edeaafb0efa983f6",
+                "reference": "e84ae127072d22abf05aace0edeaafb0efa983f6",
                 "shasum": ""
             },
             "require": {
@@ -1209,7 +1209,7 @@
                 "http",
                 "varnish"
             ],
-            "time": "2013-11-25 10:52:43"
+            "time": "2013-12-05 13:11:22"
         },
         {
             "name": "monolog/monolog",
@@ -2160,12 +2160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/Hateoas.git",
-                "reference": "eac2b1bf55247c3fbe9e11c285e550a187d0e172"
+                "reference": "c7ffcb446eff1e24ebba1ac487d3c74b74ba4945"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/Hateoas/zipball/eac2b1bf55247c3fbe9e11c285e550a187d0e172",
-                "reference": "eac2b1bf55247c3fbe9e11c285e550a187d0e172",
+                "url": "https://api.github.com/repos/willdurand/Hateoas/zipball/c7ffcb446eff1e24ebba1ac487d3c74b74ba4945",
+                "reference": "c7ffcb446eff1e24ebba1ac487d3c74b74ba4945",
                 "shasum": ""
             },
             "require": {
@@ -2215,7 +2215,7 @@
                 }
             ],
             "description": "A PHP library to support implementing representations for HATEOAS REST web services",
-            "time": "2013-11-13 16:50:51"
+            "time": "2013-12-05 14:01:30"
         },
         {
             "name": "willdurand/hateoas-bundle",
@@ -2318,6 +2318,54 @@
                 "negotiation"
             ],
             "time": "2013-11-21 10:29:12"
+        },
+        {
+            "name": "willdurand/rest-extra-bundle",
+            "version": "v0.1.0",
+            "target-dir": "Bazinga/Bundle/RestExtraBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/BazingaRestExtraBundle.git",
+                "reference": "eb1fc877bd1b0202bbf4b60e875a066a4ceb60a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/BazingaRestExtraBundle/zipball/eb1fc877bd1b0202bbf4b60e875a066a4ceb60a5",
+                "reference": "eb1fc877bd1b0202bbf4b60e875a066a4ceb60a5",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "~2.1",
+                "willdurand/negotiation": "~1.0"
+            },
+            "require-dev": {
+                "symfony/browser-kit": "~2.1",
+                "symfony/finder": "~2.1",
+                "symfony/yaml": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Bazinga\\Bundle\\RestExtraBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com",
+                    "homepage": "http://www.willdurand.fr"
+                }
+            ],
+            "description": "This bundle provides extra features for your REST APIs built using Symfony2.",
+            "keywords": [
+                "api",
+                "rest"
+            ],
+            "time": "2013-12-05 08:14:10"
         }
     ],
     "packages-dev": [
