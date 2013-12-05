@@ -23,8 +23,8 @@
         "nelmio/api-doc-bundle": "~2.4",
         "liip/cache-control-bundle": "~1.0.5",
         "willdurand/hateoas": "~2.0@dev",
-        "willdurand/hateoas-bundle": "~1.0@dev",
-        "hautelook/templated-uri-bundle": "dev-master",
+        "willdurand/hateoas-bundle": "0.0.*",
+        "hautelook/templated-uri-bundle": "~1.0",
         "willdurand/rest-extra-bundle": "~0.1"
     },
     "scripts": {
