@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "81b824c77ea29aa969133d2e424c50cf",
+    "hash": "3a4a77d76c113a230b144bd2ded6b208",
     "packages": [
         {
             "name": "dflydev/markdown",
@@ -756,6 +756,56 @@
                 "rest"
             ],
             "time": "2013-11-28 09:03:02"
+        },
+        {
+            "name": "hautelook/templated-uri-bundle",
+            "version": "dev-master",
+            "target-dir": "Hautelook/TemplatedUriBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hautelook/TemplatedUriBundle.git",
+                "reference": "60ca2c9f69da48276022164fede316ab43d36402"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hautelook/TemplatedUriBundle/zipball/60ca2c9f69da48276022164fede316ab43d36402",
+                "reference": "60ca2c9f69da48276022164fede316ab43d36402",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/framework-bundle": "~2.1",
+                "symfony/http-kernel": "~2.1",
+                "symfony/routing": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Hautelook\\TemplatedUriBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baldur Rensch",
+                    "email": "brensch@gmail.com"
+                }
+            ],
+            "description": "Symfony2 Bundle that provides a RFC-6570 compatible router and URL Generator.",
+            "homepage": "http://www.hautelooktech.com/",
+            "keywords": [
+                "HATEOAS",
+                "RFC 6570",
+                "Symfony2",
+                "json",
+                "uri",
+                "url",
+                "xml"
+            ],
+            "time": "2013-12-05 00:21:33"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -2280,7 +2330,8 @@
     "stability-flags": {
         "jms/serializer-bundle": 20,
         "willdurand/hateoas": 20,
-        "willdurand/hateoas-bundle": 20
+        "willdurand/hateoas-bundle": 20,
+        "hautelook/templated-uri-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

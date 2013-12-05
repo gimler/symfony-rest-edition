@@ -22,3 +22,13 @@ Acme\DemoBundle\Model\NoteCollection:
       href:
         route: get_notes
         absolute: true
+    -
+      rel: note
+      href:
+        route: get_note
+        absolute: true
+        generator: templated
+        parameters:
+          id: "{id}"
+      attributes:
+        templated: true
