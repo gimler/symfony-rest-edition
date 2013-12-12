@@ -141,7 +141,7 @@ class NoteController extends FOSRestController
      */
     public function postNotesAction(Request $request)
     {
-        $session = $this->getRequest()->getSession();
+        $session = $request->getSession();
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
 
         $note = new Note();
@@ -223,7 +223,7 @@ class NoteController extends FOSRestController
      */
     public function putNotesAction(Request $request, $id)
     {
-        $session = $this->getRequest()->getSession();
+        $session = $request->getSession();
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
         if (!isset($notes[$id])) {
