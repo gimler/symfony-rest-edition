@@ -8,18 +8,6 @@ use Symfony\Component\BrowserKit\Client;
 
 class NoteControllerTest extends WebTestCase
 {
-    private function getClient($authenticated = false)
-    {
-        $params = array();
-        if ($authenticated) {
-            $params = array_merge($params, array(
-                'PHP_AUTH_USER' => 'restapi',
-                'PHP_AUTH_PW'   => 'secretpw',
-            ));
-        }
-
-        return static::createClient(array(), $params);
-    }
     public function testGetNotes()
     {
         $client = $this->getClient(true);
@@ -215,5 +203,18 @@ class NoteControllerTest extends WebTestCase
         ));
         $response = $client->getResponse();
         $this->assertJsonResponse($response, Codes::HTTP_CREATED);
+    }
+
+    private function getClient($authenticated = false)
+    {
+        $params = array();
+        if ($authenticated) {
+            $params = array_merge($params, array(
+                    'PHP_AUTH_USER' => 'restapi',
+                    'PHP_AUTH_PW'   => 'secretpw',
+                ));
+        }
+
+        return static::createClient(array(), $params);
     }
 }
