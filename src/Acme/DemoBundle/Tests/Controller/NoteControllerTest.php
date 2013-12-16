@@ -15,8 +15,6 @@ class NoteControllerTest extends WebTestCase
         // head request
         $client->request('HEAD', '/notes.json');
         $response = $client->getResponse();
-
-        $this->assertJsonResponse($response);
         $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
 
         // empty list
@@ -24,7 +22,6 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response);
-        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $this->assertEquals('{"notes":[],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $response->getContent());
 
         // list
@@ -34,7 +31,6 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response);
-        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
         $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $contentWithoutSecret);
     }
@@ -55,7 +51,6 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response);
-        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
         $this->assertEquals('{"secret":"XXX","message":"my note for get","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
     }
@@ -68,7 +63,6 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response);
-        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $this->assertEquals('{"children":{"message":[]}}', $response->getContent());
     }
 
@@ -100,7 +94,6 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response);
-        $this->assertEquals(200, $response->getStatusCode(), $response->getContent());
         $this->assertEquals('{"children":{"message":[]}}', $response->getContent());
     }
 
