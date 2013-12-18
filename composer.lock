@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5cacaeae17ca576819cbe82e3cb210f1",
+    "hash": "be2b93e616cd511f16f49d6324f7ffc3",
     "packages": [
         {
             "name": "dflydev/markdown",
@@ -104,7 +104,8 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -176,7 +177,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -215,12 +216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "v1.1"
+                "reference": "560f29c39cfcfbcd210e5d549d993a39d898b04b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/v1.1",
-                "reference": "v1.1",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/560f29c39cfcfbcd210e5d549d993a39d898b04b",
+                "reference": "560f29c39cfcfbcd210e5d549d993a39d898b04b",
                 "shasum": ""
             },
             "require": {
@@ -243,9 +244,10 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -317,7 +319,8 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -423,25 +426,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "v1.2.0"
+                "reference": "765b0d87fcc3e839c74817b7211258cbef3a4fb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/v1.2.0",
-                "reference": "v1.2.0",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/765b0d87fcc3e839c74817b7211258cbef3a4fb9",
+                "reference": "765b0d87fcc3e839c74817b7211258cbef3a4fb9",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": ">=2.2,<2.5-dev",
-                "jdorn/sql-formatter": ">=1.1,<2.0",
+                "jdorn/sql-formatter": "~1.1",
                 "php": ">=5.3.2",
-                "symfony/doctrine-bridge": ">=2.2,<3.0",
-                "symfony/framework-bundle": ">=2.2,<3.0"
+                "symfony/doctrine-bridge": "~2.2",
+                "symfony/framework-bundle": "~2.2"
             },
             "require-dev": {
                 "doctrine/orm": ">=2.2,<2.5-dev",
-                "symfony/validator": ">=2.2,<3.0",
-                "symfony/yaml": ">=2.2,<3.0"
+                "symfony/validator": "~2.2",
+                "symfony/yaml": "~2.2"
             },
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle.",
@@ -492,12 +495,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "v1.0"
+                "reference": "54b8333d2a5682afdc690060c1cf384ba9f47f08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/inflector/archive/v1.0.zip",
-                "reference": "v1.0",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/54b8333d2a5682afdc690060c1cf384ba9f47f08",
+                "reference": "54b8333d2a5682afdc690060c1cf384ba9f47f08",
                 "shasum": ""
             },
             "require": {
@@ -517,7 +520,8 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/"
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 },
                 {
                     "name": "Guilherme Blanco",
@@ -555,12 +559,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "v1.0"
+                "reference": "2f708a85bb3aab5d99dab8be435abd73e0b18acb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/lexer/archive/v1.0.zip",
-                "reference": "v1.0",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/2f708a85bb3aab5d99dab8be435abd73e0b18acb",
+                "reference": "2f708a85bb3aab5d99dab8be435abd73e0b18acb",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +591,7 @@
                     "email": "roman@code-factory.org"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -684,12 +688,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "f121e2010b7aa97136c204f52ce7045658ec2986"
+                "reference": "d469bffb7ca4db956bcfcce271271d16500cd274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/f121e2010b7aa97136c204f52ce7045658ec2986",
-                "reference": "f121e2010b7aa97136c204f52ce7045658ec2986",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/d469bffb7ca4db956bcfcce271271d16500cd274",
+                "reference": "d469bffb7ca4db956bcfcce271271d16500cd274",
                 "shasum": ""
             },
             "require": {
@@ -751,7 +755,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-12-14 14:18:56"
+            "time": "2013-12-16 18:40:03"
         },
         {
             "name": "hautelook/templated-uri-bundle",
@@ -971,13 +975,13 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "git://github.com/schmittjoh/parser-lib",
-                "reference": "1.0.0"
+                "url": "https://github.com/schmittjoh/parser-lib.git",
+                "reference": "c509473bc1b4866415627af0e1c6cc8ac97fa51d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/schmittjoh/parser-lib/archive/1.0.0.zip",
-                "reference": "1.0.0",
+                "url": "https://api.github.com/repos/schmittjoh/parser-lib/zipball/c509473bc1b4866415627af0e1c6cc8ac97fa51d",
+                "reference": "c509473bc1b4866415627af0e1c6cc8ac97fa51d",
                 "shasum": ""
             },
             "require": {
@@ -1340,17 +1344,17 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "2.4.3",
+            "version": "2.4.4",
             "target-dir": "Nelmio/ApiDocBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "21a0774265fbd79d5d145580a2d757c964ce6ab3"
+                "reference": "4b6efc6631161f9ddb64aecfbcbc8d117a77df52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/21a0774265fbd79d5d145580a2d757c964ce6ab3",
-                "reference": "21a0774265fbd79d5d145580a2d757c964ce6ab3",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/4b6efc6631161f9ddb64aecfbcbc8d117a77df52",
+                "reference": "4b6efc6631161f9ddb64aecfbcbc8d117a77df52",
                 "shasum": ""
             },
             "require": {
@@ -1411,7 +1415,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2013-12-05 20:36:37"
+            "time": "2013-12-16 15:47:21"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -1419,12 +1423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-collection.git",
-                "reference": "0.2.0"
+                "reference": "acb02a921bb364f360ce786b13455345063c4a07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-collection/zipball/0.2.0",
-                "reference": "0.2.0",
+                "url": "https://api.github.com/repos/schmittjoh/php-collection/zipball/acb02a921bb364f360ce786b13455345063c4a07",
+                "reference": "acb02a921bb364f360ce786b13455345063c4a07",
                 "shasum": ""
             },
             "require": {
@@ -1517,13 +1521,13 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-fig/log",
-                "reference": "1.0.0"
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/php-fig/log/archive/1.0.0.zip",
-                "reference": "1.0.0",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
                 "shasum": ""
             },
             "type": "library",
@@ -2176,16 +2180,16 @@
         },
         {
             "name": "willdurand/hateoas",
-            "version": "dev-master",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/Hateoas.git",
-                "reference": "57924cf1f6481112d31a8a2ac3cca9b55117455d"
+                "reference": "493b163ac4f9f3ca43bd1a468f46bae0c182c2f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/Hateoas/zipball/57924cf1f6481112d31a8a2ac3cca9b55117455d",
-                "reference": "57924cf1f6481112d31a8a2ac3cca9b55117455d",
+                "url": "https://api.github.com/repos/willdurand/Hateoas/zipball/493b163ac4f9f3ca43bd1a468f46bae0c182c2f9",
+                "reference": "493b163ac4f9f3ca43bd1a468f46bae0c182c2f9",
                 "shasum": ""
             },
             "require": {
@@ -2235,27 +2239,27 @@
                 }
             ],
             "description": "A PHP library to support implementing representations for HATEOAS REST web services",
-            "time": "2013-12-16 07:19:47"
+            "time": "2013-12-18 22:33:16"
         },
         {
             "name": "willdurand/hateoas-bundle",
-            "version": "0.0.5",
+            "version": "0.1.1",
             "target-dir": "Bazinga/Bundle/HateoasBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaHateoasBundle.git",
-                "reference": "19e8d9c1978193a23872c72f723de98ac718675e"
+                "reference": "cc1da1a0a18427fa8b77db5c4d2d6b3473ed55bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaHateoasBundle/zipball/19e8d9c1978193a23872c72f723de98ac718675e",
-                "reference": "19e8d9c1978193a23872c72f723de98ac718675e",
+                "url": "https://api.github.com/repos/willdurand/BazingaHateoasBundle/zipball/cc1da1a0a18427fa8b77db5c4d2d6b3473ed55bb",
+                "reference": "cc1da1a0a18427fa8b77db5c4d2d6b3473ed55bb",
                 "shasum": ""
             },
             "require": {
-                "jms/serializer-bundle": "~0.12",
-                "symfony/framework-bundle": "~2.1",
-                "willdurand/hateoas": "~2.0@dev"
+                "jms/serializer-bundle": "~0.13",
+                "symfony/framework-bundle": "~2.2",
+                "willdurand/hateoas": "~2.0"
             },
             "require-dev": {
                 "symfony/expression-language": "~2.4"
@@ -2287,7 +2291,7 @@
                 "HATEOAS",
                 "rest"
             ],
-            "time": "2013-12-11 12:30:45"
+            "time": "2013-12-18 23:39:49"
         },
         {
             "name": "willdurand/negotiation",
@@ -2341,30 +2345,35 @@
         },
         {
             "name": "willdurand/rest-extra-bundle",
-            "version": "v0.2.0",
+            "version": "v1.0.0",
             "target-dir": "Bazinga/Bundle/RestExtraBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaRestExtraBundle.git",
-                "reference": "740385858b12b4089812b9bd865a6a66ca4c8448"
+                "reference": "fa519eba73a5e381acf65433f089d02ac10102cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaRestExtraBundle/zipball/740385858b12b4089812b9bd865a6a66ca4c8448",
-                "reference": "740385858b12b4089812b9bd865a6a66ca4c8448",
+                "url": "https://api.github.com/repos/willdurand/BazingaRestExtraBundle/zipball/fa519eba73a5e381acf65433f089d02ac10102cc",
+                "reference": "fa519eba73a5e381acf65433f089d02ac10102cc",
                 "shasum": ""
             },
             "require": {
-                "symfony/framework-bundle": "~2.1",
-                "willdurand/negotiation": "~1.0"
+                "symfony/framework-bundle": "~2.1"
             },
             "require-dev": {
                 "sensio/framework-extra-bundle": "~2.1",
                 "symfony/browser-kit": "~2.1",
                 "symfony/finder": "~2.1",
+                "symfony/form": "~2.1",
                 "symfony/yaml": "~2.1"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Bazinga\\Bundle\\RestExtraBundle": ""
@@ -2386,7 +2395,7 @@
                 "api",
                 "rest"
             ],
-            "time": "2013-12-10 08:18:36"
+            "time": "2013-12-16 14:23:47"
         }
     ],
     "packages-dev": [
@@ -2398,8 +2407,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jms/serializer-bundle": 20,
-        "friendsofsymfony/rest-bundle": 20,
-        "willdurand/hateoas": 20
+        "friendsofsymfony/rest-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"
