@@ -23,7 +23,7 @@
         "friendsofsymfony/rest-bundle": "1.2.*@dev",
         "nelmio/api-doc-bundle": "~2.4",
         "liip/cache-control-bundle": "~1.0.5",
-        "willdurand/hateoas-bundle": "0.1.*",
+        "willdurand/hateoas-bundle": "0.2.*",
         "hautelook/templated-uri-bundle": "~1.0",
         "willdurand/rest-extra-bundle": "~1.0"
     },
