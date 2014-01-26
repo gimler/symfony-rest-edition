@@ -19,6 +19,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
  * Rest controller for notes
@@ -258,6 +259,9 @@ class NoteController extends FOSRestController
      *   resource = true,
      *   statusCodes={
      *     204="Returned when successful",
+     *     404={
+     *       "Returned when the note is not found",
+     *     }
      *   }
      * )
      *
@@ -266,17 +270,19 @@ class NoteController extends FOSRestController
      *
      * @return RouteRedirectView
      *
-     * @throws NotFoundHttpException when note not exist
+     * @throws ResourceNotFoundException when note not exist
      */
     public function deleteNotesAction(Request $request, $id)
     {
         $session = $request->getSession();
 
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
-        if (isset($notes[$id])) {
-            unset($notes[$id]);
-            $session->set(self::SESSION_CONTEXT_NOTE, $notes);
+        if (!isset($notes[$id])) {
+            throw new ResourceNotFoundException('Note not found');
         }
+
+        unset($notes[$id]);
+        $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
         return $this->routeRedirectView('get_notes', array(), Codes::HTTP_NO_CONTENT);
     }
@@ -298,6 +304,8 @@ class NoteController extends FOSRestController
      * @param int     $id      the note id
      *
      * @return RouteRedirectView
+     *
+     * @throws ResourceNotFoundException when note not exist
      */
     public function removeNotesAction(Request $request, $id)
     {
