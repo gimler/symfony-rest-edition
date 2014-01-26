@@ -8,4 +8,6 @@ php:
 
 before_script: composer install --prefer-source
 
+after_failure: "cat /home/travis/build/gimler/symfony-rest-edition/app/logs/test.log"
+
 script: phpunit -c app
