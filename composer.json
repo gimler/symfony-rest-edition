@@ -27,6 +27,9 @@
         "hautelook/templated-uri-bundle": "~1.0",
         "willdurand/rest-extra-bundle": "~1.0"
     },
+    "conflict": {
+        "symfony/routing": "2.4.1"
+    },
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
