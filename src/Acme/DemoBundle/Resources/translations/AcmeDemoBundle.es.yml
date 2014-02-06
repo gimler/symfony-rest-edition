@@ -1,0 +1,20 @@
+note:
+  list:
+    link: de vuelta a la lista de notas
+    headline: Notas disponibles
+    empty: Ninguna nota encontrada
+  new:
+    link: crear una nota
+    headline: Crear nota
+    submit: añadir nota
+  edit:
+    link: editar
+    headline: Editar nota %id%
+    submit: actualizar nota
+  remove:
+    link: remover
+  offset: posición
+  limit: limite
+api:
+  doc:
+    link: Documentación del API
