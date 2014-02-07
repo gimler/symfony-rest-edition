@@ -75,7 +75,7 @@ To see a real-live Symfony page in action, access the following page:
 
     web/app_dev.php/notes
 
-Using the console after installing httpied.org first determine a valid session ID,
+Using the console after installing httpie.org first determine a valid session ID,
 since the demo app uses a session to "persist" data for simplicity. You can either
 use some tool to inspect response headers in your browser to determine an active
 session ID or use httpie with a HEAD request copy the ``PHPSESSID`` value from the
