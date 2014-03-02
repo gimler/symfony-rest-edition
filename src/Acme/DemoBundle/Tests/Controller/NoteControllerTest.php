@@ -75,7 +75,7 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response, Codes::HTTP_CREATED);
-        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
+        $this->assertEquals($response->headers->get('location'), 'http://localhost/notes/0');
     }
 
     public function testEditNote()
@@ -121,7 +121,7 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response, Codes::HTTP_NO_CONTENT);
-        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
+        $this->assertEquals($response->headers->get('location'), 'http://localhost/notes/0');
     }
 
     public function testPutShouldCreateANote()
@@ -146,7 +146,7 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response, Codes::HTTP_CREATED);
-        $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
+        $this->assertEquals($response->headers->get('location'), 'http://localhost/notes/0');
     }
 
     public function testRemoveNote()
