@@ -154,7 +154,7 @@ class NoteController extends FOSRestController
             $notes[$note->id] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
-            return $this->routeRedirectView('get_notes');
+            return $this->routeRedirectView('get_note', array('id' => $note->id));
         }
 
         return array(
@@ -245,7 +245,7 @@ class NoteController extends FOSRestController
             $notes[$id] = $note;
             $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
-            return $this->routeRedirectView('get_notes', array(), $statusCode);
+            return $this->routeRedirectView('get_note', array('id' => $note->id), $statusCode);
         }
 
         return $form;
