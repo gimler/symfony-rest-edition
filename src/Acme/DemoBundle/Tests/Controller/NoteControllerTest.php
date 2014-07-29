@@ -120,7 +120,10 @@ class NoteControllerTest extends WebTestCase
         ));
         $response = $client->getResponse();
 
-        $this->assertJsonResponse($response, Codes::HTTP_NO_CONTENT);
+        $this->assertEquals(
+            Codes::HTTP_NO_CONTENT, $response->getStatusCode(),
+            $response->getContent()
+        );
         $this->assertEquals($response->headers->get('location'), 'http://localhost/notes/0');
     }
 
@@ -163,7 +166,11 @@ class NoteControllerTest extends WebTestCase
         $client->request('GET', '/notes/0/remove.json');
         $response = $client->getResponse();
 
-        $this->assertJsonResponse($response, Codes::HTTP_NO_CONTENT);
+        $this->assertEquals(
+            Codes::HTTP_NO_CONTENT, $response->getStatusCode(),
+            $response->getContent()
+        );
+
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
@@ -181,7 +188,10 @@ class NoteControllerTest extends WebTestCase
         $client->request('DELETE', '/notes/0.json');
         $response = $client->getResponse();
 
-        $this->assertJsonResponse($response, Codes::HTTP_NO_CONTENT);
+        $this->assertEquals(
+            Codes::HTTP_NO_CONTENT, $response->getStatusCode(),
+            $response->getContent()
+        );
         $this->assertTrue($response->headers->contains('location', 'http://localhost/notes'));
     }
 
