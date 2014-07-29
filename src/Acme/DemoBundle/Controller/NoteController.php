@@ -257,8 +257,7 @@ class NoteController extends FOSRestController
      * @ApiDoc(
      *   resource = true,
      *   statusCodes={
-     *     204="Returned when successful",
-     *     404="Returned when the note is not found"
+     *     204="Returned when successful"
      *   }
      * )
      *
@@ -266,19 +265,17 @@ class NoteController extends FOSRestController
      * @param int     $id      the note id
      *
      * @return RouteRedirectView
-     *
-     * @throws NotFoundHttpException when note not exist
      */
     public function deleteNotesAction(Request $request, $id)
     {
         $session = $request->getSession();
         $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
-        if (!isset($notes[$id])) {
-            throw $this->createNotFoundException("Note does not exist.");
+        if (isset($notes[$id])) {
+            // There is a debate if this should be a 404 or a 204
+            // see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
+            unset($notes[$id]);
+            $session->set(self::SESSION_CONTEXT_NOTE, $notes);
         }
-
-        unset($notes[$id]);
-        $session->set(self::SESSION_CONTEXT_NOTE, $notes);
 
         return $this->routeRedirectView('get_notes', array(), Codes::HTTP_NO_CONTENT);
     }
@@ -289,8 +286,7 @@ class NoteController extends FOSRestController
      * @ApiDoc(
      *   resource = true,
      *   statusCodes={
-     *     204="Returned when successful",
-     *     404="Returned when the note is not found"
+     *     204="Returned when successful"
      *   }
      * )
      *
@@ -298,8 +294,6 @@ class NoteController extends FOSRestController
      * @param int     $id      the note id
      *
      * @return RouteRedirectView
-     *
-     * @throws NotFoundHttpException when note not exist
      */
     public function removeNotesAction(Request $request, $id)
     {

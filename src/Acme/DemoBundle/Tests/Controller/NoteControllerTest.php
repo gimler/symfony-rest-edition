@@ -156,7 +156,10 @@ class NoteControllerTest extends WebTestCase
         $client->request('GET', '/notes/0/remove.json');
         $response = $client->getResponse();
 
-        $this->assertJsonResponse($response, Codes::HTTP_NOT_FOUND);
+        $this->assertEquals(
+            Codes::HTTP_NO_CONTENT, $response->getStatusCode(),
+            $response->getContent()
+        );
 
         $this->createNote($client, 'my note for get');
 
@@ -174,7 +177,10 @@ class NoteControllerTest extends WebTestCase
         $client->request('DELETE', '/notes/0.json');
         $response = $client->getResponse();
 
-        $this->assertJsonResponse($response, Codes::HTTP_NOT_FOUND);
+        $this->assertEquals(
+            Codes::HTTP_NO_CONTENT, $response->getStatusCode(),
+            $response->getContent()
+        );
 
         $this->createNote($client, 'my note for get');
 
