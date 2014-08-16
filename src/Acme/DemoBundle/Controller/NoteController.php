@@ -28,8 +28,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class NoteController extends FOSRestController
 {
-    const SESSION_CONTEXT_NOTE = 'notes';
-
     /**
      * List all notes.
      *
@@ -52,14 +50,13 @@ class NoteController extends FOSRestController
      */
     public function getNotesAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
-        $session = $request->getSession();
+        $noteManager = $this->get('acme.demo.note_manager');
 
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $notes = $session->get(self::SESSION_CONTEXT_NOTE, array());
-        $notes = array_slice($notes, $start, $limit, true);
+        $notes = $noteManager->fetch($start, $limit);
 
         return new NoteCollection($notes, $offset, $limit);
     }
@@ -86,13 +83,12 @@ class NoteController extends FOSRestController
      */
     public function getNoteAction(Request $request, $id)
     {
-        $session = $request->getSession();
-        $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
-        if (!isset($notes[$id])) {
+        $note = $this->get('acme.demo.note_manager')->get($id);
+        if (false === $note) {
             throw $this->createNotFoundException("Note does not exist.");
         }
 
-        $view = new View($notes[$id]);
+        $view = new View($note);
         $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
         $view->getSerializationContext()->setGroups(array('Default', $group));
 
@@ -141,18 +137,15 @@ class NoteController extends FOSRestController
      */
     public function postNotesAction(Request $request)
     {
-        $session = $request->getSession();
-        $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
-
         $note = new Note();
-        $note->id = $this->getValidIndex($notes);
         $form = $this->createForm(new NoteType(), $note);
 
         $form->submit($request);
         if ($form->isValid()) {
             $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
-            $notes[$note->id] = $note;
-            $session->set(self::SESSION_CONTEXT_NOTE, $notes);
+
+            $noteManager = $this->get('acme.demo.note_manager');
+            $noteManager->set($note);
 
             return $this->routeRedirectView('get_note', array('id' => $note->id));
         }
@@ -184,14 +177,12 @@ class NoteController extends FOSRestController
      */
     public function editNotesAction(Request $request, $id)
     {
-        $session = $request->getSession();
-
-        $notes = $session->get(self::SESSION_CONTEXT_NOTE);
-        if (!isset($notes[$id])) {
+        $note = $this->get('acme.demo.note_manager')->get($id);
+        if (false === $note) {
             throw $this->createNotFoundException("Note does not exist.");
         }
 
-        $form = $this->createForm(new NoteType(), $notes[$id]);
+        $form = $this->createForm(new NoteType(), $note);
 
         return $form;
     }
@@ -223,15 +214,13 @@ class NoteController extends FOSRestController
      */
     public function putNotesAction(Request $request, $id)
     {
-        $session = $request->getSession();
-
-        $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
-        if (!isset($notes[$id])) {
+        $noteManager = $this->get('acme.demo.note_manager');
+        $note = $noteManager->get($id);
+        if (false === $note) {
             $note = new Note();
             $note->id = $id;
             $statusCode = Codes::HTTP_CREATED;
         } else {
-            $note = $notes[$id];
             $statusCode = Codes::HTTP_NO_CONTENT;
         }
 
@@ -242,8 +231,8 @@ class NoteController extends FOSRestController
             if (!isset($note->secret)) {
                 $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
             }
-            $notes[$id] = $note;
-            $session->set(self::SESSION_CONTEXT_NOTE, $notes);
+
+            $noteManager->set($note);
 
             return $this->routeRedirectView('get_note', array('id' => $note->id), $statusCode);
         }
@@ -268,15 +257,10 @@ class NoteController extends FOSRestController
      */
     public function deleteNotesAction(Request $request, $id)
     {
-        $session = $request->getSession();
-        $notes   = $session->get(self::SESSION_CONTEXT_NOTE);
-        if (isset($notes[$id])) {
-            // There is a debate if this should be a 404 or a 204
-            // see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
-            unset($notes[$id]);
-            $session->set(self::SESSION_CONTEXT_NOTE, $notes);
-        }
+        $this->get('acme.demo.note_manager')->remove($id);
 
+        // There is a debate if this should be a 404 or a 204
+        // see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
         return $this->routeRedirectView('get_notes', array(), Codes::HTTP_NO_CONTENT);
     }
 
@@ -299,22 +283,4 @@ class NoteController extends FOSRestController
     {
         return $this->deleteNotesAction($request, $id);
     }
-
-    /**
-     * Get a valid index key.
-     *
-     * @param array $notes
-     *
-     * @return int $id
-     */
-    private function getValidIndex($notes)
-    {
-        $id = count($notes);
-        while (isset($notes[$id])) {
-            $id++;
-        }
-
-        return $id;
-    }
-
 }

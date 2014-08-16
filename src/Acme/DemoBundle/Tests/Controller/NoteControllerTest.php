@@ -8,6 +8,12 @@ use Symfony\Component\BrowserKit\Client;
 
 class NoteControllerTest extends WebTestCase
 {
+    public function setUp() {
+        if (file_exists(sys_get_temp_dir() . '/sf_note_data')) {
+            unlink(sys_get_temp_dir() . '/sf_note_data');
+        }
+    }
+
     public function testGetNotes()
     {
         $client = $this->getClient(true);
