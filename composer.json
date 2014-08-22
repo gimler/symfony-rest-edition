@@ -22,7 +22,7 @@
         "jms/serializer-bundle": "0.13.*@dev",
         "friendsofsymfony/rest-bundle": "1.4.*",
         "nelmio/api-doc-bundle": "~2.4",
-        "liip/cache-control-bundle": "~1.0.5",
+        "friendsofsymfony/http-cache-bundle": "~1.0",
         "willdurand/hateoas-bundle": "1.0.*@dev",
         "hautelook/templated-uri-bundle": "~2.0",
         "willdurand/rest-extra-bundle": "~1.0"
