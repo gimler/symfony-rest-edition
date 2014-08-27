@@ -6,8 +6,9 @@
 
     <services>
         <service id="acme.demo.note_manager" class="Acme\DemoBundle\NoteManager" public="true">
+            <argument type="service" id="security.secure_random" />
+            <argument>%kernel.cache_dir%</argument>
         </service>
-
         <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
             <tag name="twig.extension" />
             <argument type="service" id="twig.loader" />

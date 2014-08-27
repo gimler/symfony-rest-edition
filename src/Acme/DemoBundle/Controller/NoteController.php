@@ -29,6 +29,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class NoteController extends FOSRestController
 {
     /**
+     * return \Acme\DemoBundle\NoteManager
+     */
+    public function getNoteManager()
+    {
+        return $this->get('acme.demo.note_manager');
+    }
+
+    /**
      * List all notes.
      *
      * @ApiDoc(
@@ -50,13 +58,11 @@ class NoteController extends FOSRestController
      */
     public function getNotesAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
-        $noteManager = $this->get('acme.demo.note_manager');
-
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $notes = $noteManager->fetch($start, $limit);
+        $notes = $this->getNoteManager()->fetch($start, $limit);
 
         return new NoteCollection($notes, $offset, $limit);
     }
@@ -83,7 +89,7 @@ class NoteController extends FOSRestController
      */
     public function getNoteAction(Request $request, $id)
     {
-        $note = $this->get('acme.demo.note_manager')->get($id);
+        $note = $this->getNoteManager()->get($id);
         if (false === $note) {
             throw $this->createNotFoundException("Note does not exist.");
         }
@@ -142,10 +148,7 @@ class NoteController extends FOSRestController
 
         $form->submit($request);
         if ($form->isValid()) {
-            $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
-
-            $noteManager = $this->get('acme.demo.note_manager');
-            $noteManager->set($note);
+            $this->getNoteManager()->set($note);
 
             return $this->routeRedirectView('get_note', array('id' => $note->id));
         }
@@ -177,7 +180,7 @@ class NoteController extends FOSRestController
      */
     public function editNotesAction(Request $request, $id)
     {
-        $note = $this->get('acme.demo.note_manager')->get($id);
+        $note = $this->getNoteManager()->get($id);
         if (false === $note) {
             throw $this->createNotFoundException("Note does not exist.");
         }
@@ -214,8 +217,7 @@ class NoteController extends FOSRestController
      */
     public function putNotesAction(Request $request, $id)
     {
-        $noteManager = $this->get('acme.demo.note_manager');
-        $note = $noteManager->get($id);
+        $note = $this->getNoteManager()->get($id);
         if (false === $note) {
             $note = new Note();
             $note->id = $id;
@@ -228,11 +230,7 @@ class NoteController extends FOSRestController
 
         $form->submit($request);
         if ($form->isValid()) {
-            if (!isset($note->secret)) {
-                $note->secret = base64_encode($this->get('security.secure_random')->nextBytes(64));
-            }
-
-            $noteManager->set($note);
+            $this->getNoteManager()->set($note);
 
             return $this->routeRedirectView('get_note', array('id' => $note->id), $statusCode);
         }
@@ -257,7 +255,7 @@ class NoteController extends FOSRestController
      */
     public function deleteNotesAction(Request $request, $id)
     {
-        $this->get('acme.demo.note_manager')->remove($id);
+        $this->getNoteManager()->remove($id);
 
         // There is a debate if this should be a 404 or a 204
         // see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
