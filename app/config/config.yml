@@ -92,15 +92,19 @@ fos_rest:
         json: true
     body_listener: true
 
-nelmio_api_doc: ~
-
-liip_cache_control:
-    flash_message_listener: true
-    authorization_listener: false
-    rules:
-        # the controls section values are used in a call to Response::setCache();
-        - { path: ^/notes, method: [GET, HEAD], controls: { public: true, max_age: 15, s_maxage: 30, last_modified: "-1 hour" }, vary: [Accept-Encoding, Accept-Language] }
-
-bazinga_hateoas: ~
-
-bazinga_rest_extra: ~
+fos_http_cache:
+    flash_message: true
+    cache_control:
+        rules:
+            -
+                match:
+                    path: ^/notes
+                    method: [GET, HEAD]
+                headers:
+                    vary: [Accept-Encoding, Accept-Language]
+                    cache_control:
+                        public: true
+                        max_age: 15
+                        s_maxage: 30
+                    last_modified: "-1 hour"
+                    reverse_proxy_ttl: 3600
