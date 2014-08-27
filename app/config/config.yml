@@ -10,14 +10,14 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: %kernel.debug%
     form:            ~
-    csrf_protection: true
+    csrf_protection: false
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:         ~
+    session:         false
     fragments:       ~
 
 # Twig Configuration
@@ -92,10 +92,7 @@ fos_rest:
         json: true
     body_listener: true
 
-nelmio_api_doc: ~
-
 fos_http_cache:
-    flash_message: true
     cache_control:
         rules:
             # the controls section values are used in a call to Response::setCache();
@@ -106,8 +103,4 @@ fos_http_cache:
                 headers:
                     cache_control: { public: true, max_age: 15, s_maxage: 30 }
                     last_modified: "-1 hour"
-                    vary: [Accept-Encoding, Accept-Language] 
-
-bazinga_hateoas: ~
-
-bazinga_rest_extra: ~
+                    vary: [Accept-Encoding, Accept-Language]
