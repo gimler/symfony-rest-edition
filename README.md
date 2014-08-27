@@ -192,6 +192,8 @@ It comes pre-configured with the following bundles:
 
   * [**FOSRestBundle**][16] - Adds rest functionality
 
+  * [**FOSHttpCacheBundle**][21] - This bundle offers tools to improve HTTP caching with Symfony2
+
   * [**NelmioApiDocBundle**][17] - Add API documentation features
 
   * [**BazingaHateoasBundle**][18] - Adds HATEOAS support
@@ -220,3 +222,4 @@ Enjoy!
 [18]: https://github.com/willdurand/BazingaHateoasBundle
 [19]: https://github.com/hautelook/TemplatedUriBundle
 [20]: https://github.com/willdurand/BazingaRestExtraBundle
+[21]: https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/
