@@ -10,6 +10,15 @@ Acme\DemoBundle\Model\Note:
       expose: true
       type: string
       groups: [restapi]
+    version:
+      expose: true
+      type: string
+      until_version: 1.1
+    new_version:
+      expose: true
+      type: string
+      serialized_name: version
+      since_version: 1.1
   relations:
     -
       rel: self

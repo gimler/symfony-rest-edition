@@ -81,6 +81,7 @@ you can run some commends to test the API as well:
     http "http://symfony-rest-edition.lo/app_dev.php/notes" --json -a restapi:secretpw
     http POST "http://symfony-rest-edition.lo/app_dev.php/notes" --json -a restapi:secretpw < note.json
     http "http://symfony-rest-edition.lo/app_dev.php/notes/0" --json -a restapi:secretpw
+    http "http://symfony-rest-edition.lo/app_dev.php/notes/0" "Accept:application/json;version=1.0" -a restapi:secretpw
     http DELETE "http://symfony-rest-edition.lo/app_dev.php/notes/0" --json -a restapi:secretpw
     http PUT "http://symfony-rest-edition.lo/app_dev.php/notes/0" --json -a restapi:secretpw < note.json
     http PUT "http://symfony-rest-edition.lo/app_dev.php/notes/1" --json -a restapi:secretpw < note.json

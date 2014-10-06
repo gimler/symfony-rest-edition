@@ -20,6 +20,16 @@ class Note
     public $message;
 
     /**
+     * @var string The original version
+     */
+    public $version = 1;
+
+    /**
+     * @var string This version will be used since 1.1
+     */
+    public $new_version = 1.1;
+
+    /**
      * String representation for a note
      *
      * @return string
