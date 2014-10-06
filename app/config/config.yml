@@ -72,6 +72,8 @@ fos_rest:
     disable_csrf_role: ROLE_API
     param_fetcher_listener: true
     view:
+        mime_types:
+            json: ['application/json', 'application/json;version=1.0', 'application/json;version=1.1']
         view_response_listener: 'force'
         formats:
             xml:  true
@@ -81,6 +83,8 @@ fos_rest:
     format_listener:
         rules:
             - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
+        media_type:
+            version_regex: '/(v|version)=(?P<version>[0-9\.]+)/'
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404

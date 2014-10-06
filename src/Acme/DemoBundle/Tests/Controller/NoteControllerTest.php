@@ -40,7 +40,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonResponse($response);
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
-        $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $contentWithoutSecret);
+        $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","version":"1.1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $contentWithoutSecret);
     }
 
     public function testGetNote()
@@ -60,7 +60,41 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonResponse($response);
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
-        $this->assertEquals('{"secret":"XXX","message":"my note for get","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
+        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1.1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
+
+        $client->request('GET', '/notes/0', array(), array(), array('HTTP_ACCEPT' => 'application/json'));
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response);
+        $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
+        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1.1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
+    }
+
+    public function testGetNoteVersioned()
+    {
+        $client = $this->getClient(true);
+
+        $client->request('GET', '/notes/0.json');
+        $response = $client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
+        $this->assertEquals('{"code":404,"message":"Note does not exist."}', $response->getContent());
+
+        $this->createNote($client, 'my note for get');
+
+        $client->request('GET', '/notes/0', array(), array(), array('HTTP_ACCEPT' => 'application/json;version=1.0'));
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response);
+        $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
+        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
+
+        $client->request('GET', '/notes/0', array(), array(), array('HTTP_ACCEPT' => 'application/json;version=1.1'));
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response);
+        $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
+        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1.1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
     }
 
     public function testNewNote()
