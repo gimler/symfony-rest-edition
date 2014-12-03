@@ -205,8 +205,7 @@ class NoteController extends FOSRestController
      *   input = "Acme\DemoBundle\Form\NoteType",
      *   statusCodes = {
      *     201 = "Returned when a new resource is created",
-     *     204 = "Returned when successful",
-     *     400 = "Returned when the form has errors"
+     *     204 = "Returned when successful"
      *   }
      * )
      *
