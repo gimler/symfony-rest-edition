@@ -247,7 +247,7 @@ class NoteController extends FOSRestController
      * @ApiDoc(
      *   resource = true,
      *   statusCodes={
-     *     204="Returned when successful"
+     *     204="Returned when successful",
      *     404 = "Returned when the note is not found"
      *   }
      * )
@@ -259,9 +259,7 @@ class NoteController extends FOSRestController
      */
     public function deleteNotesAction(Request $request, $id)
     {
-        if(!$this->getNoteManager()->remove($id)){
-            throw new ResourceNotFoundException("Note", $id);
-        }
+        $this->getNoteManager()->remove($id);
 
         // There is a debate if this should be a 404 or a 204
         // see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
