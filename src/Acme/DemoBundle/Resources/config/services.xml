@@ -9,6 +9,11 @@
             <argument type="service" id="security.secure_random" />
             <argument>%kernel.cache_dir%</argument>
         </service>
+
+        <service id="acme.demo.form_handler.note" class="%codag_rest_fabrication.form_handler.create_form.class%">
+            <argument type="service" id="acme.demo.note_manager" />
+        </service>
+
         <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
             <tag name="twig.extension" />
             <argument type="service" id="twig.loader" />

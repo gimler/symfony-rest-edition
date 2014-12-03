@@ -6,6 +6,7 @@ use Acme\DemoBundle\Form\NoteType;
 use Acme\DemoBundle\Model\Note;
 use Acme\DemoBundle\Model\NoteCollection;
 
+use Codag\RestFabricationBundle\Exception\InvalidFormException;
 use FOS\RestBundle\Util\Codes;
 
 use FOS\RestBundle\Controller\Annotations;
@@ -18,7 +19,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Codag\RestFabricationBundle\Exception\ResourceNotFoundException;
 
 /**
  * Rest controller for notes
@@ -34,6 +35,14 @@ class NoteController extends FOSRestController
     public function getNoteManager()
     {
         return $this->get('acme.demo.note_manager');
+    }
+
+    /**
+     * return \Codag\RestFabricationBundle\Form\Handler\CreateFormHandler
+     */
+    public function getFormHandler()
+    {
+        return $this->get('acme.demo.form_handler.note');
     }
 
     /**
@@ -85,13 +94,13 @@ class NoteController extends FOSRestController
      *
      * @return array
      *
-     * @throws NotFoundHttpException when note not exist
+     * @throws ResourceNotFoundException when note not exist
      */
     public function getNoteAction(Request $request, $id)
     {
         $note = $this->getNoteManager()->get($id);
         if (false === $note) {
-            throw $this->createNotFoundException("Note does not exist.");
+            throw new ResourceNotFoundException("Note", $id);
         }
 
         $view = new View($note);
@@ -140,22 +149,20 @@ class NoteController extends FOSRestController
      * @param Request $request the request object
      *
      * @return FormTypeInterface|RouteRedirectView
+     *
+     * @throws InvalidFormException when FormHandler receives invalid form
      */
     public function postNotesAction(Request $request)
     {
-        $note = new Note();
-        $form = $this->createForm(new NoteType(), $note);
-
-        $form->submit($request);
-        if ($form->isValid()) {
-            $this->getNoteManager()->set($note);
-
-            return $this->routeRedirectView('get_note', array('id' => $note->id));
+        try {
+            $form = $this->createForm(new NoteType(), new Note());
+            $new = $this->getFormHandler()->handle($form, $request);
+            return $this->routeRedirectView('get_note', array('id' => $new->id));
+        }catch (InvalidFormException $exception) {
+            return array(
+                'form' => $exception->getForm()
+            );
         }
-
-        return array(
-            'form' => $form
-        );
     }
 
     /**
@@ -176,13 +183,13 @@ class NoteController extends FOSRestController
      *
      * @return FormTypeInterface
      *
-     * @throws NotFoundHttpException when note not exist
+     * @throws ResourceNotFoundException when note not exist
      */
     public function editNotesAction(Request $request, $id)
     {
         $note = $this->getNoteManager()->get($id);
         if (false === $note) {
-            throw $this->createNotFoundException("Note does not exist.");
+            throw new ResourceNotFoundException("Note", $id);
         }
 
         $form = $this->createForm(new NoteType(), $note);
@@ -213,29 +220,25 @@ class NoteController extends FOSRestController
      *
      * @return FormTypeInterface|RouteRedirectView
      *
-     * @throws NotFoundHttpException when note not exist
+     * @throws ResourceNotFoundException when note not exist
      */
     public function putNotesAction(Request $request, $id)
     {
-        $note = $this->getNoteManager()->get($id);
-        if (false === $note) {
-            $note = new Note();
-            $note->id = $id;
-            $statusCode = Codes::HTTP_CREATED;
-        } else {
-            $statusCode = Codes::HTTP_NO_CONTENT;
+        try {
+            if (!($object = $this->getNoteManager()->get($id))) {
+                $statusCode = Codes::HTTP_CREATED;
+                $form = $this->createForm(new NoteType(), new Note(), array('method' => 'POST'));
+            } else {
+                $statusCode = Codes::HTTP_NO_CONTENT;
+                $form = $this->createForm(new NoteType(), $object, array('method' => 'PUT'));
+            }
+            $object = $this->getFormHandler()->handle($form, $request);
+
+            return $this->routeRedirectView('get_note', array('id' => $object->id), $statusCode);
+
+        } catch (InvalidFormException $exception) {
+            return $exception->getForm();
         }
-
-        $form = $this->createForm(new NoteType(), $note);
-
-        $form->submit($request);
-        if ($form->isValid()) {
-            $this->getNoteManager()->set($note);
-
-            return $this->routeRedirectView('get_note', array('id' => $note->id), $statusCode);
-        }
-
-        return $form;
     }
 
     /**
@@ -245,6 +248,7 @@ class NoteController extends FOSRestController
      *   resource = true,
      *   statusCodes={
      *     204="Returned when successful"
+     *     404 = "Returned when the note is not found"
      *   }
      * )
      *
@@ -255,7 +259,9 @@ class NoteController extends FOSRestController
      */
     public function deleteNotesAction(Request $request, $id)
     {
-        $this->getNoteManager()->remove($id);
+        if(!$this->getNoteManager()->remove($id)){
+            throw new ResourceNotFoundException("Note", $id);
+        }
 
         // There is a debate if this should be a 404 or a 204
         // see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
