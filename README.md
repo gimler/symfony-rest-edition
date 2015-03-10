@@ -75,8 +75,9 @@ To see a real-live Symfony page in action, access the following page:
 
     web/app_dev.php/notes
 
-Using the console after installing httpie.org or some other http client
-you can run some commends to test the API as well:
+Using the console after installing [httpie][22] or some other HTTP client
+you can run some commands to test the API as well (replace
+`http://symfony-rest-edition.lo` with your application URL):
 
     http "http://symfony-rest-edition.lo/app_dev.php/notes" --json -a restapi:secretpw
     http POST "http://symfony-rest-edition.lo/app_dev.php/notes" --json -a restapi:secretpw < note.json
@@ -204,3 +205,4 @@ Enjoy!
 [19]: https://github.com/hautelook/TemplatedUriBundle
 [20]: https://github.com/willdurand/BazingaRestExtraBundle
 [21]: https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/
+[22]: http://httpie.org
