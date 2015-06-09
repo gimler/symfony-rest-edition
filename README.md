@@ -2,6 +2,7 @@ Symfony REST Edition
 ========================
 
 [![Build Status](https://travis-ci.org/gimler/symfony-rest-edition.png?branch=2.3)](https://travis-ci.org/gimler/symfony-rest-edition) [![Total Downloads](https://poser.pugx.org/gimler/symfony-rest-edition/downloads.png)](https://packagist.org/packages/gimler/symfony-rest-edition)
+[![License](https://poser.pugx.org/gimler/symfony-rest-edition/license)](https://packagist.org/packages/gimler/symfony-rest-edition)
 
 Welcome to the Symfony REST Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.
