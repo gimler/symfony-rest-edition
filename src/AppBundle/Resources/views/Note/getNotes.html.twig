@@ -1,0 +1,30 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title "Symfony - Notes" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'note.list.headline'|trans({}, 'AppBundle') }}</h1>
+
+    <p>
+        {{ 'note.offset'|trans({}, 'AppBundle') }}: {{ data.offset ?: '-' }}, {{ 'note.limit'|trans({}, 'AppBundle') }}: {{ data.limit }}
+    </p>
+
+    <ul id="note-list">
+        {% for id, note in data.notes %}
+        <li>
+            <a href="{{ path('get_note', {'id': id}) }}">{{ note }}</a>
+            [<a href="{{ path('edit_notes', {'id': id}) }}">{{ 'note.edit.link'|trans({}, 'AppBundle') }}</a>]
+            [<a href="{{ path('remove_notes', {'id': id}) }}">{{ 'note.remove.link'|trans({}, 'AppBundle') }}</a>]
+        </li>
+        {% else %}
+        <li>{{ 'note.list.empty'|trans({}, 'AppBundle') }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{{ path('new_note') }}">{{ 'note.new.link'|trans({}, 'AppBundle') }}</a>
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}

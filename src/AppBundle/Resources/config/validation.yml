@@ -1,0 +1,4 @@
+AppBundle\Model\Note:
+    properties:
+        message:
+            - NotBlank: ~

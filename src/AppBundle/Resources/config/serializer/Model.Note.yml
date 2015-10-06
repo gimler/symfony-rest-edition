@@ -1,0 +1,36 @@
+AppBundle\Model\Note:
+  exclusion_policy: ALL
+  xml_root_name: note
+  properties:
+    message:
+      expose: true
+      type: string
+      groups: [standard, restapi]
+    secret:
+      expose: true
+      type: string
+      groups: [restapi]
+    version:
+      expose: true
+      type: string
+      until_version: 1.1
+    new_version:
+      expose: true
+      type: string
+      serialized_name: version
+      since_version: 1.1
+  relations:
+    -
+      rel: self
+      href:
+        route: get_note
+        parameters:
+          id: expr(object.id)
+        absolute: true
+    -
+      rel: expr(object.getAssociatedEventsRel())
+      embed:
+        content: expr(object.getAssociatedEvents())
+        xmlElementName: events
+        exclusion:
+          exclude_if: expr(object.id === 0)

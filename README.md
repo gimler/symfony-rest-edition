@@ -106,10 +106,10 @@ take you through all the basic features of Symfony2.
 Once you're feeling good, you can move onto reading the official
 [Symfony2 book][5].
 
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
+A default bundle, `AppBundle`, shows you Symfony2 in action. After
 playing with it, you can remove it by following these steps:
 
-  * delete the `src/Acme` directory;
+  * delete the `src/AppBundle` directory;
 
   * remove the routing entries referencing AcmeBundle in
     `app/config/routing_dev.yml`;

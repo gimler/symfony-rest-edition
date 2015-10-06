@@ -1,0 +1,21 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title "Symfony - Notes" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'note.new.headline'|trans({}, 'AppBundle') }}</h1>
+
+    {%  if (form is defined) %}
+    <form action="{{ url('post_notes') }}" method="POST" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+
+        <input type="submit" value="{% trans from 'AppBundle' %}note.new.submit{% endtrans %}">
+    </form>
+    {% endif %}
+
+{% endblock %}
+
+{% set code = code(_self) %}

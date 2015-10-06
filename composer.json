@@ -4,53 +4,60 @@
     "type": "project",
     "description": "The \"Symfony REST Edition\" distribution",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-4": { "": "src/" }
     },
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
-        "symfony/icu": "1.0.*",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle": "1.2.*",
-        "twig/extensions": "1.0.*",
-        "symfony/assetic-bundle": "2.3.*",
-        "symfony/swiftmailer-bundle": "2.3.*",
-        "symfony/monolog-bundle": "~2.3",
-        "sensio/distribution-bundle": "2.3.*",
-        "sensio/framework-extra-bundle": "2.3.*",
-        "sensio/generator-bundle": "2.3.*",
-        "jms/serializer-bundle": "0.13.*@dev",
-        "friendsofsymfony/rest-bundle": "1.4.*",
-        "nelmio/api-doc-bundle": "~2.4",
-        "friendsofsymfony/http-cache-bundle": "~1.0",
-        "willdurand/hateoas-bundle": "1.0.*@dev",
-        "hautelook/templated-uri-bundle": "~2.0",
-        "willdurand/rest-extra-bundle": "~1.0"
+        "php": ">=5.3.9",
+        "symfony/symfony": "2.7.*",
+        "doctrine/orm": "^2.4.8",
+        "doctrine/doctrine-bundle": "~1.4",
+        "symfony/assetic-bundle": "~2.3",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.4",
+        "sensio/distribution-bundle": "~4.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "jms/serializer-bundle": "^1.0",
+        "friendsofsymfony/rest-bundle": "^1.0",
+        "nelmio/api-doc-bundle": "^2.4",
+        "friendsofsymfony/http-cache-bundle": "^1.0",
+        "willdurand/hateoas-bundle": "^1.0",
+        "hautelook/templated-uri-bundle": "^2.0",
+        "willdurand/rest-extra-bundle": "^1.0"
     },
-    "conflict": {
-        "symfony/routing": "2.4.1"
+    "require-dev": {
+        "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
         "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "stable",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
         "branch-alias": {
-            "dev-master": "2.3-dev"
+            "dev-master": "2.7-dev"
         }
     }
 }

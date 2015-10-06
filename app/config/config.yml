@@ -9,8 +9,8 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: %kernel.debug%
-    form:            ~
-    csrf_protection: false
+    form:
+        csrf_protection: false
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -64,9 +64,6 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
-
-sensio_framework_extra:
-    view: { annotations: false }
 
 fos_rest:
     disable_csrf_role: ROLE_API

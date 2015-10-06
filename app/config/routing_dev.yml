@@ -6,7 +6,7 @@ _welcome:
         permanent: true # this for 301
 
 _demo_note:
-    resource: "@AcmeDemoBundle/Controller/NoteController.php"
+    resource: "@AppBundle/Controller/NoteController.php"
     type:     rest
 
 _wdt:

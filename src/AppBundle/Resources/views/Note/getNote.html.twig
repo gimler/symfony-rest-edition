@@ -1,0 +1,18 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title "Symfony - Note" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Note #{{ id }}</h1>
+
+    <p>{{ note }}</p>
+    <p>
+        <a href="{{ path('get_notes') }}">{{ 'note.list.link'|trans({}, 'AppBundle') }}</a> <br>
+        [<a href="{{ path('remove_notes', {'id': id}) }}">{{ 'note.remove.link'|trans({}, 'AppBundle') }}</a>]
+        [<a href="{{ path('edit_notes', {'id': id}) }}">{{ 'note.edit.link'|trans({}, 'AppBundle') }}</a>]
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}

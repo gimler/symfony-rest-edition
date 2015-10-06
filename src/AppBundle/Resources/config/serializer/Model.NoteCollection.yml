@@ -1,0 +1,34 @@
+AppBundle\Model\NoteCollection:
+  exclusion_policy: ALL
+  xml_root_name: notes
+  properties:
+    notes:
+      expose: true
+      type: array<AppBundle\Model\Note>
+      xml_list:
+        inline: true
+        entry_name: note
+    offset:
+      expose: true
+      type: integer
+      xml_attribute: true
+    limit:
+      expose: true
+      type: integer
+      xml_attribute: true
+  relations:
+    -
+      rel: self
+      href:
+        route: get_notes
+        absolute: true
+    -
+      rel: note
+      href:
+        route: get_note
+        absolute: true
+        generator: templated_uri
+        parameters:
+          id: "{id}"
+      attributes:
+        templated: true
