@@ -76,7 +76,7 @@ To see a real-live Symfony page in action, access the following page:
     web/app_dev.php/notes
 
 Using the console after installing httpie.org or some other http client
-you can run some commends to test the API as well:
+you can run some commands to test the API as well:
 
     http "http://symfony-rest-edition.lo/app_dev.php/notes" --json -a restapi:secretpw
     http POST "http://symfony-rest-edition.lo/app_dev.php/notes" --json -a restapi:secretpw < note.json
