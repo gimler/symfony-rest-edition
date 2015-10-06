@@ -40,7 +40,7 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonResponse($response);
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
-        $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","version":"1.1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $contentWithoutSecret);
+        $this->assertEquals('{"notes":[{"secret":"XXX","message":"my note for list","version":"1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}],"limit":5,"_links":{"self":{"href":"http:\/\/localhost\/notes"},"note":{"href":"http:\/\/localhost\/notes\/{id}","templated":true}}}', $contentWithoutSecret);
     }
 
     public function testGetNote()
@@ -60,14 +60,14 @@ class NoteControllerTest extends WebTestCase
 
         $this->assertJsonResponse($response);
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
-        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1.1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
+        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
 
         $client->request('GET', '/notes/0', array(), array(), array('HTTP_ACCEPT' => 'application/json'));
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response);
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
-        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1.1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
+        $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
     }
 
     public function testGetNoteVersioned()
@@ -89,7 +89,7 @@ class NoteControllerTest extends WebTestCase
         $contentWithoutSecret = preg_replace('/"secret":"[^"]*"/', '"secret":"XXX"', $response->getContent());
         $this->assertEquals('{"secret":"XXX","message":"my note for get","version":"1","_links":{"self":{"href":"http:\/\/localhost\/notes\/0"}}}', $contentWithoutSecret);
 
-        $client->request('GET', '/notes/0', array(), array(), array('HTTP_ACCEPT' => 'application/json;version=1.1'));
+        $client->request('GET', '/notes/0', array(), array(), array('HTTP_ACCEPT' => 'application/json;version=1.2'));
         $response = $client->getResponse();
 
         $this->assertJsonResponse($response);

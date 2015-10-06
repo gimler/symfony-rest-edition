@@ -20,14 +20,18 @@ class Note
     public $message;
 
     /**
-     * @var string The original version
-     */
-    public $version = 1;
-
-    /**
      * @var string This version will be used since 1.1
      */
     public $new_version = 1.1;
+
+    /**
+     * The order is important here, if no version is set, then this property
+     * will override the previous one due to the mapping of ``serialized_name``
+     * to ``version`` for the ``new_version`` property
+     *
+     * @var string The original version
+     */
+    public $version = 1;
 
     /**
      * String representation for a note
