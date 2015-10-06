@@ -2,9 +2,10 @@
 
 namespace Acme\DemoBundle;
 
+use Codag\RestFabricationBundle\DomainManager\DomainManagerInterface;
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 
-class NoteManager
+class NoteManager implements DomainManagerInterface
 {
     /** @var array notes */
     protected $data = array();
@@ -78,5 +79,9 @@ class NoteManager
         $this->flush();
 
         return true;
+    }
+
+    public function create($note){
+        $this->set($note);
     }
 }

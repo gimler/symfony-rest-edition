@@ -51,7 +51,7 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"code":404,"message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals('{"code":404,"message":"Note not found with identifier: 0"}', $response->getContent());
 
         $this->createNote($client, 'my note for get');
 
@@ -78,7 +78,7 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"code":404,"message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals('{"code":404,"message":"Note not found with identifier: 0"}', $response->getContent());
 
         $this->createNote($client, 'my note for get');
 
@@ -128,7 +128,7 @@ class NoteControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertEquals(404, $response->getStatusCode(), $response->getContent());
-        $this->assertEquals('{"code":404,"message":"Note does not exist."}', $response->getContent());
+        $this->assertEquals('{"code":404,"message":"Note not found with identifier: 0"}', $response->getContent());
 
         $this->createNote($client, 'my note for post');
 
