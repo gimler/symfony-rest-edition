@@ -172,7 +172,7 @@ $this->set($key, $values);
 }
 public function get($key, $default = null, $first = true)
 {
-$key = strtr(strtolower($key),'_','-');
+$key = str_replace('_','-', strtolower($key));
 if (!array_key_exists($key, $this->headers)) {
 if (null === $default) {
 return $first ? null : array();
@@ -186,7 +186,7 @@ return $this->headers[$key];
 }
 public function set($key, $values, $replace = true)
 {
-$key = strtr(strtolower($key),'_','-');
+$key = str_replace('_','-', strtolower($key));
 $values = array_values((array) $values);
 if (true === $replace || !isset($this->headers[$key])) {
 $this->headers[$key] = $values;
@@ -199,7 +199,7 @@ $this->cacheControl = $this->parseCacheControl($values[0]);
 }
 public function has($key)
 {
-return array_key_exists(strtr(strtolower($key),'_','-'), $this->headers);
+return array_key_exists(str_replace('_','-', strtolower($key)), $this->headers);
 }
 public function contains($key, $value)
 {
@@ -207,7 +207,7 @@ return in_array($value, $this->get($key, null, false));
 }
 public function remove($key)
 {
-$key = strtr(strtolower($key),'_','-');
+$key = str_replace('_','-', strtolower($key));
 unset($this->headers[$key]);
 if ('cache-control'=== $key) {
 $this->cacheControl = array();
@@ -387,6 +387,9 @@ $headers['AUTHORIZATION'] = $authorizationHeader;
 }
 }
 }
+if (isset($headers['AUTHORIZATION'])) {
+return $headers;
+}
 if (isset($headers['PHP_AUTH_USER'])) {
 $headers['AUTHORIZATION'] ='Basic '.base64_encode($headers['PHP_AUTH_USER'].':'.$headers['PHP_AUTH_PW']);
 } elseif (isset($headers['PHP_AUTH_DIGEST'])) {
@@ -478,7 +481,7 @@ $this->format = null;
 public static function createFromGlobals()
 {
 $server = $_SERVER;
-if ('cli-server'=== php_sapi_name()) {
+if ('cli-server'=== PHP_SAPI) {
 if (array_key_exists('HTTP_CONTENT_LENGTH', $_SERVER)) {
 $server['CONTENT_LENGTH'] = $_SERVER['HTTP_CONTENT_LENGTH'];
 }
@@ -754,16 +757,23 @@ $clientIps = $matches[3];
 } elseif (self::$trustedHeaders[self::HEADER_CLIENT_IP] && $this->headers->has(self::$trustedHeaders[self::HEADER_CLIENT_IP])) {
 $clientIps = array_map('trim', explode(',', $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_IP])));
 }
-$clientIps[] = $ip; $ip = $clientIps[0];
+$clientIps[] = $ip; $firstTrustedIp = null;
 foreach ($clientIps as $key => $clientIp) {
 if (preg_match('{((?:\d+\.){3}\d+)\:\d+}', $clientIp, $match)) {
 $clientIps[$key] = $clientIp = $match[1];
 }
+if (!filter_var($clientIp, FILTER_VALIDATE_IP)) {
+unset($clientIps[$key]);
+continue;
+}
 if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
 unset($clientIps[$key]);
+if (null === $firstTrustedIp) {
+$firstTrustedIp = $clientIp;
 }
 }
-return $clientIps ? array_reverse($clientIps) : array($ip);
+}
+return $clientIps ? array_reverse($clientIps) : array($firstTrustedIp);
 }
 public function getClientIp()
 {
@@ -968,14 +978,18 @@ return isset(static::$formats[$format]) ? static::$formats[$format][0] : null;
 }
 public function getFormat($mimeType)
 {
+$canonicalMimeType = null;
 if (false !== $pos = strpos($mimeType,';')) {
-$mimeType = substr($mimeType, 0, $pos);
+$canonicalMimeType = substr($mimeType, 0, $pos);
 }
 if (null === static::$formats) {
 static::initializeFormats();
 }
 foreach (static::$formats as $format => $mimeTypes) {
 if (in_array($mimeType, (array) $mimeTypes)) {
+return $format;
+}
+if (null !== $canonicalMimeType && in_array($canonicalMimeType, (array) $mimeTypes)) {
 return $format;
 }
 }
@@ -1238,7 +1252,6 @@ $baseUrl = $this->getBaseUrl();
 if (null === ($requestUri = $this->getRequestUri())) {
 return'/';
 }
-$pathInfo ='/';
 if ($pos = strpos($requestUri,'?')) {
 $requestUri = substr($requestUri, 0, $pos);
 }
@@ -1331,7 +1344,8 @@ const HTTP_REQUEST_URI_TOO_LONG = 414;
 const HTTP_UNSUPPORTED_MEDIA_TYPE = 415;
 const HTTP_REQUESTED_RANGE_NOT_SATISFIABLE = 416;
 const HTTP_EXPECTATION_FAILED = 417;
-const HTTP_I_AM_A_TEAPOT = 418; const HTTP_UNPROCESSABLE_ENTITY = 422; const HTTP_LOCKED = 423; const HTTP_FAILED_DEPENDENCY = 424; const HTTP_RESERVED_FOR_WEBDAV_ADVANCED_COLLECTIONS_EXPIRED_PROPOSAL = 425; const HTTP_UPGRADE_REQUIRED = 426; const HTTP_PRECONDITION_REQUIRED = 428; const HTTP_TOO_MANY_REQUESTS = 429; const HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431; const HTTP_INTERNAL_SERVER_ERROR = 500;
+const HTTP_I_AM_A_TEAPOT = 418; const HTTP_MISDIRECTED_REQUEST = 421; const HTTP_UNPROCESSABLE_ENTITY = 422; const HTTP_LOCKED = 423; const HTTP_FAILED_DEPENDENCY = 424; const HTTP_RESERVED_FOR_WEBDAV_ADVANCED_COLLECTIONS_EXPIRED_PROPOSAL = 425; const HTTP_UPGRADE_REQUIRED = 426; const HTTP_PRECONDITION_REQUIRED = 428; const HTTP_TOO_MANY_REQUESTS = 429; const HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431; const HTTP_UNAVAILABLE_FOR_LEGAL_REASONS = 451;
+const HTTP_INTERNAL_SERVER_ERROR = 500;
 const HTTP_NOT_IMPLEMENTED = 501;
 const HTTP_BAD_GATEWAY = 502;
 const HTTP_SERVICE_UNAVAILABLE = 503;
@@ -1380,7 +1394,7 @@ public static $statusTexts = array(
 415 =>'Unsupported Media Type',
 416 =>'Requested Range Not Satisfiable',
 417 =>'Expectation Failed',
-418 =>'I\'m a teapot', 422 =>'Unprocessable Entity', 423 =>'Locked', 424 =>'Failed Dependency', 425 =>'Reserved for WebDAV advanced collections expired proposal', 426 =>'Upgrade Required', 428 =>'Precondition Required', 429 =>'Too Many Requests', 431 =>'Request Header Fields Too Large', 500 =>'Internal Server Error',
+418 =>'I\'m a teapot', 421 =>'Misdirected Request', 422 =>'Unprocessable Entity', 423 =>'Locked', 424 =>'Failed Dependency', 425 =>'Reserved for WebDAV advanced collections expired proposal', 426 =>'Upgrade Required', 428 =>'Precondition Required', 429 =>'Too Many Requests', 431 =>'Request Header Fields Too Large', 451 =>'Unavailable For Legal Reasons', 500 =>'Internal Server Error',
 501 =>'Not Implemented',
 502 =>'Bad Gateway',
 503 =>'Service Unavailable',
@@ -1394,7 +1408,7 @@ $this->setContent($content);
 $this->setStatusCode($status);
 $this->setProtocolVersion('1.0');
 if (!$this->headers->has('Date')) {
-$this->setDate(new \DateTime(null, new \DateTimeZone('UTC')));
+$this->setDate(\DateTime::createFromFormat('U', time(), new \DateTimeZone('UTC')));
 }
 }
 public static function create($content ='', $status = 200, $headers = array())
@@ -1458,12 +1472,12 @@ public function sendHeaders()
 if (headers_sent()) {
 return $this;
 }
-header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusText), true, $this->statusCode);
 foreach ($this->headers->allPreserveCase() as $name => $values) {
 foreach ($values as $value) {
-header($name.': '.$value, false, $this->statusCode);
+header($name.': '.$value, false);
 }
 }
+header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusText), true, $this->statusCode);
 foreach ($this->headers->getCookies() as $cookie) {
 setcookie($cookie->getName(), $cookie->getValue(), $cookie->getExpiresTime(), $cookie->getPath(), $cookie->getDomain(), $cookie->isSecure(), $cookie->isHttpOnly());
 }
@@ -1513,7 +1527,7 @@ if ($this->isInvalid()) {
 throw new \InvalidArgumentException(sprintf('The HTTP status code "%s" is not valid.', $code));
 }
 if (null === $text) {
-$this->statusText = isset(self::$statusTexts[$code]) ? self::$statusTexts[$code] :'';
+$this->statusText = isset(self::$statusTexts[$code]) ? self::$statusTexts[$code] :'unknown status';
 return $this;
 }
 if (false === $text) {
@@ -1873,7 +1887,7 @@ $this->set('Cache-Control','');
 public function set($key, $values, $replace = true)
 {
 parent::set($key, $values, $replace);
-$uniqueKey = strtr(strtolower($key),'_','-');
+$uniqueKey = str_replace('_','-', strtolower($key));
 $this->headerNames[$uniqueKey] = $key;
 if (in_array($uniqueKey, array('cache-control','etag','last-modified','expires'))) {
 $computed = $this->computeCacheControlValue();
@@ -1885,7 +1899,7 @@ $this->computedCacheControl = $this->parseCacheControl($computed);
 public function remove($key)
 {
 parent::remove($key);
-$uniqueKey = strtr(strtolower($key),'_','-');
+$uniqueKey = str_replace('_','-', strtolower($key));
 unset($this->headerNames[$uniqueKey]);
 if ('cache-control'=== $uniqueKey) {
 $this->computedCacheControl = array();
@@ -2085,6 +2099,9 @@ throw new RuntimeException(sprintf('You cannot set service "%s" of inactive scop
 }
 $this->scopedServices[$scope][$id] = $service;
 }
+if (isset($this->aliases[$id])) {
+unset($this->aliases[$id]);
+}
 $this->services[$id] = $service;
 if (method_exists($this, $method ='synchronize'.strtr($id, $this->underscoreMap).'Service')) {
 $this->$method();
@@ -2155,12 +2172,14 @@ try {
 $service = $this->$method();
 } catch (\Exception $e) {
 unset($this->loading[$id]);
-if (array_key_exists($id, $this->services)) {
 unset($this->services[$id]);
-}
 if ($e instanceof InactiveScopeException && self::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
 return;
 }
+throw $e;
+} catch (\Throwable $e) {
+unset($this->loading[$id]);
+unset($this->services[$id]);
 throw $e;
 }
 unset($this->loading[$id]);
@@ -2181,9 +2200,8 @@ return isset($this->services[$id]) || array_key_exists($id, $this->services);
 public function getServiceIds()
 {
 $ids = array();
-$r = new \ReflectionClass($this);
-foreach ($r->getMethods() as $method) {
-if (preg_match('/^get(.+)Service$/', $method->name, $match)) {
+foreach (get_class_methods($this) as $method) {
+if (preg_match('/^get(.+)Service$/', $method, $match)) {
 $ids[] = self::underscore($match[1]);
 }
 }
@@ -2277,7 +2295,7 @@ return strtr(ucwords(strtr($id, array('_'=>' ','.'=>'_ ','\\'=>'_ '))), array(' 
 }
 public static function underscore($id)
 {
-return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/','/([a-z\d])([A-Z])/'), array('\\1_\\2','\\1_\\2'), strtr($id,'_','.')));
+return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/','/([a-z\d])([A-Z])/'), array('\\1_\\2','\\1_\\2'), str_replace('_','.', $id)));
 }
 }
 }
@@ -2363,11 +2381,11 @@ protected $booted = false;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-const VERSION ='2.7.5';
-const VERSION_ID = 20705;
+const VERSION ='2.7.14';
+const VERSION_ID = 20714;
 const MAJOR_VERSION = 2;
 const MINOR_VERSION = 7;
-const RELEASE_VERSION = 5;
+const RELEASE_VERSION = 14;
 const EXTRA_VERSION ='';
 const END_OF_MAINTENANCE ='05/2018';
 const END_OF_LIFE ='05/2019';
@@ -2715,10 +2733,7 @@ $dumper = new PhpDumper($container);
 if (class_exists('ProxyManager\Configuration') && class_exists('Symfony\Bridge\ProxyManager\LazyProxy\PhpDumper\ProxyDumper')) {
 $dumper->setProxyDumper(new ProxyDumper(md5($cache->getPath())));
 }
-$content = $dumper->dump(array('class'=> $class,'base_class'=> $baseClass,'file'=> $cache->getPath()));
-if (!$this->debug) {
-$content = static::stripComments($content);
-}
+$content = $dumper->dump(array('class'=> $class,'base_class'=> $baseClass,'file'=> $cache->getPath(),'debug'=> $this->debug));
 $cache->write($content, $container->getResources());
 }
 protected function getContainerLoader(ContainerInterface $container)
@@ -2742,14 +2757,15 @@ $rawChunk ='';
 $output ='';
 $tokens = token_get_all($source);
 $ignoreSpace = false;
-for (reset($tokens); false !== $token = current($tokens); next($tokens)) {
-if (is_string($token)) {
+for ($i = 0; isset($tokens[$i]); ++$i) {
+$token = $tokens[$i];
+if (!isset($token[1]) ||'b"'=== $token) {
 $rawChunk .= $token;
 } elseif (T_START_HEREDOC === $token[0]) {
 $output .= $rawChunk.$token[1];
 do {
-$token = next($tokens);
-$output .= $token[1];
+$token = $tokens[++$i];
+$output .= isset($token[1]) &&'b"'!== $token ? $token[1] : $token;
 } while ($token[0] !== T_END_HEREDOC);
 $rawChunk ='';
 } elseif (T_WHITESPACE === $token[0]) {
@@ -2768,6 +2784,10 @@ $ignoreSpace = true;
 }
 }
 $output .= $rawChunk;
+if (PHP_VERSION_ID >= 70000) {
+unset($tokens, $rawChunk);
+gc_mem_caches();
+}
 return $output;
 }
 public function serialize()
@@ -2789,8 +2809,8 @@ private $prefix;
 protected $decorated;
 public function __construct($prefix, $decorated)
 {
-if (!extension_loaded('apc')) {
-throw new \RuntimeException('Unable to use ApcClassLoader as APC is not enabled.');
+if (!function_exists('apcu_fetch')) {
+throw new \RuntimeException('Unable to use ApcClassLoader as APC is not installed.');
 }
 if (!method_exists($decorated,'findFile')) {
 throw new \InvalidArgumentException('The class finder must implement a "findFile" method.');
@@ -2815,8 +2835,9 @@ return true;
 }
 public function findFile($class)
 {
-if (false === $file = apc_fetch($this->prefix.$class)) {
-apc_store($this->prefix.$class, $file = $this->decorated->findFile($class));
+$file = apcu_fetch($this->prefix.$class, $success);
+if (!$success) {
+apcu_store($this->prefix.$class, $file = $this->decorated->findFile($class) ?: null);
 }
 return $file;
 }
@@ -2931,13 +2952,16 @@ public function registerCommands(Application $application)
 if (!is_dir($dir = $this->getPath().'/Command')) {
 return;
 }
+if (!class_exists('Symfony\Component\Finder\Finder')) {
+throw new \RuntimeException('You need the symfony/finder component to register bundle commands.');
+}
 $finder = new Finder();
 $finder->files()->name('*Command.php')->in($dir);
 $prefix = $this->getNamespace().'\\Command';
 foreach ($finder as $file) {
 $ns = $prefix;
 if ($relativePath = $file->getRelativePath()) {
-$ns .='\\'.strtr($relativePath,'/','\\');
+$ns .='\\'.str_replace('/','\\', $relativePath);
 }
 $class = $ns.'\\'.$file->getBasename('.php');
 if ($this->container) {
@@ -3221,6 +3245,10 @@ $this->container->set('request', $request,'request');
 try {
 $response = parent::handle($request, $type, $catch);
 } catch (\Exception $e) {
+$this->container->set('request', null,'request');
+$this->container->leaveScope('request');
+throw $e;
+} catch (\Throwable $e) {
 $this->container->set('request', null,'request');
 $this->container->leaveScope('request');
 throw $e;

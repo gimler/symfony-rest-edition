@@ -18,7 +18,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/serializer-bundle": "^1.0",
-        "friendsofsymfony/rest-bundle": "^1.0",
+        "friendsofsymfony/rest-bundle": "~2.0",
         "nelmio/api-doc-bundle": "^2.4",
         "friendsofsymfony/http-cache-bundle": "^1.0",
         "willdurand/hateoas-bundle": "^1.0",
