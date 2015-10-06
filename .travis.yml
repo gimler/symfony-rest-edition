@@ -2,6 +2,10 @@ language: php
 
 sudo: false
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
   - 5.4
   - 5.5
@@ -9,7 +13,10 @@ php:
   - 7.0
   - hhvm
 
-before_script: composer install --prefer-source
+before_install:
+  - composer self-update
+
+install: composer update $COMPOSER_FLAGS --prefer-dist
 
 after_failure: "cat /home/travis/build/gimler/symfony-rest-edition/app/logs/test.log"
 
