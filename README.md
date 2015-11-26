@@ -185,19 +185,19 @@ It comes pre-configured with the following bundles:
 
 Enjoy!
 
-[1]:  http://symfony.com/doc/2.1/book/installation.html
+[1]:  http://symfony.com/doc/2.7/book/installation.html
 [2]:  http://getcomposer.org/
 [3]:  https://github.com/gimler/symfony-rest-edition/archive/master.zip
-[4]:  http://symfony.com/doc/2.1/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.1/index.html
-[6]:  http://symfony.com/doc/2.1/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.1/book/doctrine.html
-[8]:  http://symfony.com/doc/2.1/book/templating.html
-[9]:  http://symfony.com/doc/2.1/book/security.html
-[10]: http://symfony.com/doc/2.1/cookbook/email.html
-[11]: http://symfony.com/doc/2.1/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.1/cookbook/assetic/asset_management.html
-[15]: http://symfony.com/doc/2.1/bundles/SensioGeneratorBundle/index.html
+[4]:  http://symfony.com/doc/2.7/quick_tour/the_big_picture.html
+[5]:  http://symfony.com/doc/2.7/index.html
+[6]:  http://symfony.com/doc/2.7/bundles/SensioFrameworkExtraBundle/index.html
+[7]:  http://symfony.com/doc/2.7/book/doctrine.html
+[8]:  http://symfony.com/doc/2.7/book/templating.html
+[9]:  http://symfony.com/doc/2.7/book/security.html
+[10]: http://symfony.com/doc/2.7/cookbook/email.html
+[11]: http://symfony.com/doc/2.7/cookbook/logging/monolog.html
+[12]: http://symfony.com/doc/2.7/cookbook/assetic/asset_management.html
+[15]: http://symfony.com/doc/2.7/bundles/SensioGeneratorBundle/index.html
 [16]: https://github.com/FriendsOfSymfony/FOSRestBundle
 [17]: https://github.com/nelmio/NelmioApiDocBundle
 [18]: https://github.com/willdurand/BazingaHateoasBundle
