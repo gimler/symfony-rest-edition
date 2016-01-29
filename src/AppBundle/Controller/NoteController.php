@@ -77,7 +77,7 @@ class NoteController extends FOSRestController
      *
      * @Annotations\View(templateVar="note")
      *
-     * @param int     $id      the note id
+     * @param int $id the note id
      *
      * @return array
      *
@@ -167,7 +167,7 @@ class NoteController extends FOSRestController
      *
      * @Annotations\View()
      *
-     * @param int     $id      the note id
+     * @param int $id the note id
      *
      * @return FormTypeInterface
      *
@@ -243,7 +243,7 @@ class NoteController extends FOSRestController
      *   }
      * )
      *
-     * @param int     $id      the note id
+     * @param int $id the note id
      *
      * @return View
      */
@@ -266,7 +266,7 @@ class NoteController extends FOSRestController
      *   }
      * )
      *
-     * @param int     $id      the note id
+     * @param int $id the note id
      *
      * @return View
      */
