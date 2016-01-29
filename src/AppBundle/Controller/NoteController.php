@@ -49,12 +49,11 @@ class NoteController extends FOSRestController
      *
      * @Annotations\View()
      *
-     * @param Request               $request      the request object
      * @param ParamFetcherInterface $paramFetcher param fetcher service
      *
      * @return array
      */
-    public function getNotesAction(Request $request, ParamFetcherInterface $paramFetcher)
+    public function getNotesAction(ParamFetcherInterface $paramFetcher)
     {
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
@@ -78,14 +77,13 @@ class NoteController extends FOSRestController
      *
      * @Annotations\View(templateVar="note")
      *
-     * @param Request $request the request object
      * @param int     $id      the note id
      *
      * @return array
      *
      * @throws NotFoundHttpException when note not exist
      */
-    public function getNoteAction(Request $request, $id)
+    public function getNoteAction($id)
     {
         $note = $this->getNoteManager()->get($id);
         if (false === $note) {
@@ -169,14 +167,13 @@ class NoteController extends FOSRestController
      *
      * @Annotations\View()
      *
-     * @param Request $request the request object
      * @param int     $id      the note id
      *
      * @return FormTypeInterface
      *
      * @throws NotFoundHttpException when note not exist
      */
-    public function editNotesAction(Request $request, $id)
+    public function editNotesAction($id)
     {
         $note = $this->getNoteManager()->get($id);
         if (false === $note) {
@@ -246,12 +243,11 @@ class NoteController extends FOSRestController
      *   }
      * )
      *
-     * @param Request $request the request object
      * @param int     $id      the note id
      *
      * @return View
      */
-    public function deleteNotesAction(Request $request, $id)
+    public function deleteNotesAction($id)
     {
         $this->getNoteManager()->remove($id);
 
@@ -270,13 +266,12 @@ class NoteController extends FOSRestController
      *   }
      * )
      *
-     * @param Request $request the request object
      * @param int     $id      the note id
      *
      * @return View
      */
-    public function removeNotesAction(Request $request, $id)
+    public function removeNotesAction($id)
     {
-        return $this->deleteNotesAction($request, $id);
+        return $this->deleteNotesAction($id);
     }
 }
