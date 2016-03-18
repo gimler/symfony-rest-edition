@@ -425,11 +425,13 @@ class SymfonyRequirements extends RequirementCollection
             'Change the permissions of either "<strong>app/logs/</strong>" or  "<strong>var/logs/</strong>" directory so that the web server can write into it.'
         );
 
-        $this->addPhpIniRequirement(
-            'date.timezone', true, false,
-            'date.timezone setting must be set',
-            'Set the "<strong>date.timezone</strong>" setting in php.ini<a href="#phpini">*</a> (like Europe/Paris).'
-        );
+        if (version_compare($installedPhpVersion, '7.0.0', '<')) {
+            $this->addPhpIniRequirement(
+                'date.timezone', true, false,
+                'date.timezone setting must be set',
+                'Set the "<strong>date.timezone</strong>" setting in php.ini<a href="#phpini">*</a> (like Europe/Paris).'
+            );
+        }
 
         if (version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>=')) {
             $timezones = array();
@@ -445,6 +447,12 @@ class SymfonyRequirements extends RequirementCollection
                 'Your default timezone is not supported by PHP. Check for typos in your <strong>php.ini</strong> file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.'
             );
         }
+
+        $this->addRequirement(
+            function_exists('iconv'),
+            'iconv() must be available',
+            'Install and enable the <strong>iconv</strong> extension.'
+        );
 
         $this->addRequirement(
             function_exists('json_encode'),
@@ -546,10 +554,10 @@ class SymfonyRequirements extends RequirementCollection
             require_once __DIR__.'/../vendor/autoload.php';
 
             try {
-                $r = new \ReflectionClass('Sensio\Bundle\DistributionBundle\SensioDistributionBundle');
+                $r = new ReflectionClass('Sensio\Bundle\DistributionBundle\SensioDistributionBundle');
 
                 $contents = file_get_contents(dirname($r->getFileName()).'/Resources/skeleton/app/SymfonyRequirements.php');
-            } catch (\ReflectionException $e) {
+            } catch (ReflectionException $e) {
                 $contents = '';
             }
             $this->addRecommendation(
@@ -670,6 +678,14 @@ class SymfonyRequirements extends RequirementCollection
                 'intl ICU version should be at least 4+',
                 'Upgrade your <strong>intl</strong> extension with a newer ICU version (4+).'
             );
+
+            if (class_exists('Symfony\Component\Intl\Intl')) {
+                $this->addRecommendation(
+                    \Symfony\Component\Intl\Intl::getIcuDataVersion() === \Symfony\Component\Intl\Intl::getIcuVersion(),
+                    sprintf('intl ICU version installed on your system (%s) should match the ICU data bundled with Symfony (%s)', \Symfony\Component\Intl\Intl::getIcuVersion(), \Symfony\Component\Intl\Intl::getIcuDataVersion()),
+                    'In most cases you should be fine, but please verify there is no inconsistencies between data provided by Symfony and the intl extension. See https://github.com/symfony/symfony/issues/15007 for an example of inconsistencies you might run into.'
+                );
+            }
 
             $this->addPhpIniRecommendation(
                 'intl.error_level',

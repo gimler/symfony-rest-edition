@@ -10,23 +10,17 @@ class NoteManager
     protected $data = array();
 
     /**
-     * @var \Symfony\Component\Security\Core\Util\SecureRandomInterface
-     */
-    protected $randomGenerator;
-
-    /**
      * @var string
      */
     protected $cacheDir;
 
-    public function __construct(SecureRandomInterface $randomGenerator, $cacheDir)
+    public function __construct($cacheDir)
     {
         if (file_exists($cacheDir . '/sf_note_data')) {
             $data = file_get_contents($cacheDir . '/sf_note_data');
             $this->data = unserialize($data);
         }
 
-        $this->randomGenerator = $randomGenerator;
         $this->cacheDir = $cacheDir;
     }
 
@@ -61,7 +55,7 @@ class NoteManager
         }
 
         if (null === $note->secret) {
-            $note->secret = base64_encode($this->randomGenerator->nextBytes(64));
+            $note->secret = base64_encode(random_bytes(64));
         }
 
         $this->data[$note->id] = $note;
