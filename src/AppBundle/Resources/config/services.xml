@@ -6,7 +6,6 @@
 
     <services>
         <service id="app.note_manager" class="AppBundle\NoteManager" public="true">
-            <argument type="service" id="security.secure_random" />
             <argument>%kernel.cache_dir%</argument>
         </service>
 

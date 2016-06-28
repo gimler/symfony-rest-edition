@@ -9,6 +9,7 @@ use AppBundle\Model\NoteCollection;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\View\RouteRedirectView;
 use FOS\RestBundle\View\View;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -91,7 +92,7 @@ class NoteController extends FOSRestController
         }
 
         $view = new View($note);
-        $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
+        $group = $this->container->get('security.authorization_checker')->isGranted('ROLE_API') ? 'restapi' : 'standard';
         $view->getSerializationContext()->setGroups(array('Default', $group));
 
         return $view;
