@@ -27,7 +27,8 @@ class Note
     /**
      * The order is important here, if no version is set, then this property
      * will override the previous one due to the mapping of ``serialized_name``
-     * to ``version`` for the ``new_version`` property
+     * to ``version`` for the ``new_version`` property. However since we
+     * define a default version in the ``fos_rest`` config it doesn't matter.
      *
      * @var string The original version
      */

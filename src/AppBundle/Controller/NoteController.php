@@ -65,6 +65,25 @@ class NoteController extends FOSRestController
     }
 
     /**
+     * Presents the form to use to create a new note.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     *
+     * @Annotations\View()
+     *
+     * @return FormTypeInterface
+     */
+    public function newNoteAction()
+    {
+        return $this->createForm(new NoteType());
+    }
+
+    /**
      * Get a single note.
      *
      * @ApiDoc(
@@ -92,28 +111,10 @@ class NoteController extends FOSRestController
 
         $view = new View($note);
         $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
-        $view->getSerializationContext()->setGroups(array('Default', $group));
+        $view->getContext()->addGroup('Default');
+        $view->getContext()->addGroup($group);
 
         return $view;
-    }
-
-    /**
-     * Presents the form to use to create a new note.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   }
-     * )
-     *
-     * @Annotations\View()
-     *
-     * @return FormTypeInterface
-     */
-    public function newNoteAction()
-    {
-        return $this->createForm(new NoteType());
     }
 
     /**
@@ -180,9 +181,7 @@ class NoteController extends FOSRestController
             throw $this->createNotFoundException("Note does not exist.");
         }
 
-        $form = $this->createForm(new NoteType(), $note);
-
-        return $form;
+        return $this->createForm(new NoteType(), $note);
     }
 
     /**

@@ -80,8 +80,11 @@ fos_rest:
     format_listener:
         rules:
             - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
-        media_type:
-            version_regex: '/(v|version)=(?P<version>[0-9\.]+)/'
+    versioning:
+        enabled: true
+        resolvers:
+            media_type:
+                enabled: true
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
